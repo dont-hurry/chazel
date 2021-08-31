@@ -1,0 +1,24 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 240px;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.heading {
+  color: #000;
+  font: bold 52px "Poiret One", cursive;
+  transition: 0.2s ease-out;
+}
+
+.heading:hover {
+  color: rgb(180, 0, 40);
+}
+
+.description {
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 16px;
+}
