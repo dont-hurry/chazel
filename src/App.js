@@ -6,11 +6,13 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className={styles.container}>
-      <Header />
-      <Navigation />
-      <Main />
+    <>
+      <div className={styles.container}>
+        <Header />
+        <Navigation />
+        <Main />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
