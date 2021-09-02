@@ -1,0 +1,47 @@
+.container {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(200, 200, 200, 0.9);
+  display: flex;
+  height: 55px;
+  justify-content: space-between;
+  left: 0;
+  padding: 0 40px;
+  position: fixed;
+  top: 0;
+  transition: 0.5s;
+  width: 100%;
+}
+
+.left span {
+  color: #000;
+  font-size: 24px;
+  line-height: 55px;
+  transition: 0.2s ease-out;
+}
+
+.left span:hover {
+  color: rgb(180, 0, 40);
+}
+
+.right {
+  display: flex;
+  gap: 40px;
+}
+
+.right a {
+  color: #000;
+  font-size: 16px;
+}
+
+.right a:hover {
+  color: rgb(180, 0, 40);
+}
+
+.visible {
+  opacity: 1;
+}
+
+.invisible {
+  opacity: 0;
+}
