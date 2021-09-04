@@ -41,6 +41,6 @@ async function getArticleByChapterAndArticleId(chapter, articleId) {
     .then((response) => response.json())
     .then((data) => ({
       ...data,
-      imageCover: `/images/cover/${path}/${data.imageCover}`,
+      coverImage: `/images/cover/${path}/${data.coverImage}`,
     }));
 }
