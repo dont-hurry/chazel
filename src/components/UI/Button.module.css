@@ -1,0 +1,30 @@
+.base {
+  background: rgb(245, 245, 245);
+  border: 1px solid rgb(210, 210, 210);
+  border-bottom: 3px solid rgb(210, 210, 210);
+  border-radius: 5px;
+  color: rgb(100, 100, 100);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 15px;
+  transition: 0.1s ease-out;
+}
+
+.base:hover {
+  background: rgb(200, 200, 200);
+  border-color: rgb(170, 170, 170);
+  color: rgb(45, 45, 45);
+}
+
+.active {
+  background: rgb(215, 65, 120);
+  border-color: rgb(175, 50, 95);
+  color: #fff;
+  text-shadow: 0 2.5px 0 rgb(175, 50, 95);
+}
+
+.active:hover {
+  background: rgb(195, 60, 110);
+  border-color: rgb(175, 50, 95);
+  color: #fff;
+}

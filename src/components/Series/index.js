@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getPreviewsByChapterAndPage } from "../../services/articles";
 import styles from "./index.module.css";
 import PreviewThreeColumns from "./PreviewThreeColumns";
+import PageButtonSet from "./PageButtonSet";
 
 // TODO: Support multiple chapters
 export default function Series({ title, chapters }) {
@@ -11,10 +12,10 @@ export default function Series({ title, chapters }) {
 
   useEffect(() => {
     const latestChapter = chapters[chapters.length - 1];
-    getPreviewsByChapterAndPage(latestChapter, 1).then((data) =>
+    getPreviewsByChapterAndPage(latestChapter, currentPage).then((data) =>
       setPreviews(data)
     );
-  }, [chapters]);
+  }, [chapters, currentPage]);
 
   return (
     <section className={styles.container}>
@@ -26,9 +27,11 @@ export default function Series({ title, chapters }) {
         totalPage={totalPage}
       />
 
-      <div>
-        {currentPage}/{totalPage}
-      </div>
+      <PageButtonSet
+        currentPage={currentPage}
+        totalPage={totalPage}
+        setCurrentPage={setCurrentPage}
+      />
     </section>
   );
 }
