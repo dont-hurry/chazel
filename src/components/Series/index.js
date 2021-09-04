@@ -6,11 +6,14 @@ import PageButtonSet from "./PageButtonSet";
 
 // TODO: Support multiple chapters
 export default function Series({ title, chapters }) {
-  const [previews, setPreviews] = useState([]);
+  const [previews, setPreviews] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPage = Math.ceil(chapters[0].articleNum / 3);
 
   useEffect(() => {
+    // For loading skeleton
+    setPreviews(null);
+
     const latestChapter = chapters[chapters.length - 1];
     getPreviewsByChapterAndPage(latestChapter, currentPage).then((data) =>
       setPreviews(data)
