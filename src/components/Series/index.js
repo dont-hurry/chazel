@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getPreviewsByChapterAndPage } from "../../services/articles";
 import styles from "./index.module.css";
+import PreviewThreeColumns from "./PreviewThreeColumns";
 
 // TODO: Support multiple chapters
 export default function Series({ title, chapters }) {
@@ -18,15 +19,13 @@ export default function Series({ title, chapters }) {
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>{title}</h2>
-      <div>
-        {previews.map(({ coverImage, title, content }) => (
-          <div key={title}>
-            <img src={coverImage} alt="" />
-            <div>{title}</div>
-            <div className={styles.content}>{content}</div>
-          </div>
-        ))}
-      </div>
+
+      <PreviewThreeColumns
+        previews={previews}
+        currentPage={currentPage}
+        totalPage={totalPage}
+      />
+
       <div>
         {currentPage}/{totalPage}
       </div>

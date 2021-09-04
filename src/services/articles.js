@@ -28,7 +28,7 @@ async function getPreviewByChapterAndArticleId(chapter, articleId) {
   return getArticleByChapterAndArticleId(chapter, articleId).then(
     (articleData) => ({
       ...articleData,
-      content: articleData.content.replace(/　/g, "").substring(0, 120),
+      content: articleData.content.replace(/　/g, "").substring(0, 100) + "⋯⋯",
     })
   );
 }

@@ -1,0 +1,35 @@
+.threeColumns {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 320px);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.coverImage {
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  opacity: 0.8;
+  transition: 0.2s ease-out;
+  width: 100%;
+}
+
+.coverImage:hover {
+  opacity: 1;
+}
+
+.title {
+  color: rgb(180, 0, 40);
+  font-size: 24px;
+  padding-top: 10px;
+}
+
+.content {
+  color: rgb(60, 60, 60);
+  line-height: 1.6;
+  padding: 10px 0;
+}
