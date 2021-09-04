@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAllSeries } from "../services/articles";
-import styles from "./Main.module.css";
-import Series from "./Series";
+import styles from "./main.module.css";
+import Series from "../components/Series";
 
 export default function Main() {
   const [allSeries, setAllSeries] = useState([]);

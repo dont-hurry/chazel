@@ -1,5 +1,6 @@
 import styles from "./PreviewThreeColumns.module.css";
 import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 
 export default function PreviewThreeColumns({ previews }) {
   return (
@@ -14,9 +15,11 @@ export default function PreviewThreeColumns({ previews }) {
         ))}
 
       {previews &&
-        previews.map(({ coverImage, title, content }) => (
+        previews.map(({ coverImage, title, content, linkTo }) => (
           <div key={title} className={styles.column}>
-            <img src={coverImage} alt="" className={styles.coverImage} />
+            <Link to={linkTo}>
+              <img src={coverImage} alt="" className={styles.coverImage} />
+            </Link>
             <div className={styles.title}>{title}</div>
             <div className={styles.content}>{content}</div>
           </div>
