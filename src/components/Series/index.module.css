@@ -1,0 +1,8 @@
+.container:not(:last-child) {
+  border-bottom: 1px dashed rgba(100, 100, 100, 0.9);
+}
+
+.title {
+  font: 32px "Noto Serif TC", serif;
+  padding: 35px 0 25px;
+}
