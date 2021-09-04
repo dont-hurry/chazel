@@ -25,16 +25,16 @@ export async function getPreviewsByChapterAndPage(
 }
 
 async function getPreviewByChapterAndArticleId(chapter, articleId) {
-  return getArticleByChapterAndArticleId(chapter, articleId).then(
-    (articleData) => ({
-      ...articleData,
-      content: articleData.content.replace(/　/g, "").substring(0, 100) + "⋯⋯",
-    })
-  );
+  const { path } = chapter;
+
+  return getArticleByPathAndArticleId(path, articleId).then((articleData) => ({
+    ...articleData,
+    content: articleData.content.replace(/　/g, "").substring(0, 100) + "⋯⋯",
+    linkTo: `/articles/${path}/${articleId}/${articleData.title}/`,
+  }));
 }
 
-async function getArticleByChapterAndArticleId(chapter, articleId) {
-  const { path } = chapter;
+export async function getArticleByPathAndArticleId(path, articleId) {
   const fullArticlePath = `/articles/${path}/${articleId}.json`;
 
   return fetch(fullArticlePath)
@@ -42,6 +42,5 @@ async function getArticleByChapterAndArticleId(chapter, articleId) {
     .then((data) => ({
       ...data,
       coverImage: `/images/cover/${path}/${data.coverImage}`,
-      linkTo: `/articles/${path}/${articleId}/`,
     }));
 }

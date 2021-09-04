@@ -18,7 +18,7 @@ export default function App() {
             <Route path="/" exact>
               <MainPage />
             </Route>
-            <Route path="/articles/:path/:articleId/">
+            <Route path="/articles/:path/:articleId/:title?">
               <ReadingPage />
             </Route>
           </Switch>

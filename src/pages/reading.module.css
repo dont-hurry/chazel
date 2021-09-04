@@ -1,0 +1,30 @@
+.outerContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+
+.title {
+  color: rgb(180, 0, 40);
+  font: 36px "Noto Serif TC", serif;
+  padding: 35px 0 25px;
+}
+
+.innerContainer {
+  display: flex;
+  margin-bottom: 40px;
+  padding: 20px 0 15px;
+}
+
+.contentWrapper {
+  border-right: 1px dashed rgb(200, 200, 200);
+  color: rgb(30, 30, 30);
+  padding: 20px 15px 15px 0;
+  white-space: pre-wrap;
+  width: 800px;
+}
+
+.sidebar {
+  padding: 20px 0 15px 15px;
+  width: 180px;
+}
