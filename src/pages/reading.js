@@ -3,8 +3,14 @@ import { useParams } from "react-router-dom";
 import { getArticleByPathAndArticleId } from "../services/articles";
 import styles from "./reading.module.css";
 import Skeleton from "react-loading-skeleton";
+import ReadingSidebar from "../components/ReadingSidebar";
 
-export default function Reading({ fontSize, lineHeight, setLineHeight }) {
+export default function Reading({
+  fontSize,
+  setFontSize,
+  lineHeight,
+  setLineHeight,
+}) {
   const [article, setArticle] = useState(null);
 
   const { path, articleId } = useParams();
@@ -26,7 +32,12 @@ export default function Reading({ fontSize, lineHeight, setLineHeight }) {
           {!article && <Skeleton count="10" />}
         </div>
 
-        <div className={styles.sidebar}>sidebar</div>
+        <ReadingSidebar
+          fontSize={fontSize}
+          setFontSize={setFontSize}
+          lineHeight={lineHeight}
+          setLineHeight={setLineHeight}
+        />
       </div>
     </div>
   );

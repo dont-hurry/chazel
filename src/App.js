@@ -1,12 +1,22 @@
+import { useState } from "react";
+import fontSizeOptions from "./data/font-size-options";
+import lineHeightOptions from "./data/line-height-options";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import styles from "./App.module.css";
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainPage from "./pages/main";
 import ReadingPage from "./pages/reading";
 import Footer from "./components/Footer";
 
 export default function App() {
+  const [readingFontSize, setReadingFontSize] = useState(
+    fontSizeOptions.default
+  );
+  const [readingLineHeight, setReadingLineHeight] = useState(
+    lineHeightOptions.default
+  );
+
   return (
     <Router>
       <div className={styles.container}>
@@ -17,7 +27,12 @@ export default function App() {
             <MainPage />
           </Route>
           <Route path="/articles/:path/:articleId/:title?">
-            <ReadingPage />
+            <ReadingPage
+              fontSize={readingFontSize}
+              setFontSize={setReadingFontSize}
+              lineHeight={readingLineHeight}
+              setLineHeight={setReadingLineHeight}
+            />
           </Route>
         </Switch>
       </div>

@@ -1,0 +1,26 @@
+.container {
+  border-bottom: 1px dashed rgb(200, 200, 200);
+}
+
+.title {
+  color: #000;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.buttonsContainer {
+  display: flex;
+  padding: 15px 0;
+}
+
+.buttonsContainer button {
+  border-radius: 0;
+}
+
+.buttonsContainer button:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.buttonsContainer button:last-child {
+  border-radius: 0 5px 5px 0;
+}
