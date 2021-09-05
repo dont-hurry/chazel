@@ -7,7 +7,7 @@
 .title {
   color: rgb(180, 0, 40);
   font: 36px "Noto Serif TC", serif;
-  padding: 35px 0 25px;
+  margin: 35px 0 25px;
 }
 
 .innerContainer {
@@ -27,4 +27,9 @@
 .sidebar {
   padding: 20px 0 15px 15px;
   width: 180px;
+}
+
+.skeletonTitle {
+  font-size: 36px;
+  margin: 35px 0 25px;
 }
