@@ -26,7 +26,7 @@ export default function App() {
           <Route path="/" exact>
             <MainPage />
           </Route>
-          <Route path="/articles/:path/:articleId/:title?">
+          <Route path="/articles/">
             <ReadingPage
               fontSize={readingFontSize}
               setFontSize={setReadingFontSize}

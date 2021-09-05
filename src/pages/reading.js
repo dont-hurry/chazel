@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { getArticleByPathAndArticleId } from "../services/articles";
 import styles from "./reading.module.css";
 import Skeleton from "react-loading-skeleton";
@@ -11,11 +10,25 @@ export default function Reading({
   lineHeight,
   setLineHeight,
 }) {
+  const [path, setPath] = useState(null);
+  const [articleId, setArticleId] = useState(null);
   const [article, setArticle] = useState(null);
 
-  const { path, articleId } = useParams();
-
   useEffect(() => {
+    // TODO: Use routing with regex instead in `App.js`
+    if (!path || !articleId) {
+      const [, , first, second, third] = window.location.pathname.split("/");
+      if (second.includes("chapter-")) {
+        setPath(`${first}/${second}`);
+        setArticleId(third);
+      } else {
+        setPath(first);
+        setArticleId(second);
+      }
+      return;
+    }
+
+    window.scrollTo(0, 0);
     getArticleByPathAndArticleId(path, articleId).then((returnedArticle) =>
       setArticle(returnedArticle)
     );

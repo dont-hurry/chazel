@@ -6,3 +6,9 @@
   font: 32px "Noto Serif TC", serif;
   padding: 35px 0 25px;
 }
+
+.chapterButtonGroup {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 20px;
+}
