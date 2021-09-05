@@ -21,7 +21,6 @@
 .avatar {
   border-radius: 50%;
   height: 45px;
-  transition: 0.2s ease-out;
   width: 45px;
 }
 

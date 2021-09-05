@@ -1,7 +1,7 @@
-import styles from "./PageButtonSet.module.css";
+import styles from "./PaginationButtons.module.css";
 import Button from "../UI/Button";
 
-export default function PageButtonSet({
+export default function PaginationButtons({
   currentPage,
   totalPage,
   setCurrentPage,
@@ -12,7 +12,7 @@ export default function PageButtonSet({
 
   return (
     <div className={styles.container}>
-      {new Array(totalPage).fill(null).map((value, index) => (
+      {new Array(totalPage).fill(null).map((_value, index) => (
         <Button
           key={index}
           active={index + 1 === currentPage}

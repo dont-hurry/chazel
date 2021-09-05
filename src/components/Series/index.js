@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { getPreviewsByChapterAndPage } from "../../services/articles";
 import styles from "./index.module.css";
-import PreviewThreeColumns from "./PreviewThreeColumns";
-import PageButtonSet from "./PageButtonSet";
+import PreviewColumns from "./PreviewColumns";
+import PaginationButtons from "./PaginationButtons";
 
 // TODO: Support multiple chapters
 export default function Series({ title, chapters }) {
@@ -11,12 +11,12 @@ export default function Series({ title, chapters }) {
   const totalPage = Math.ceil(chapters[0].articleNum / 3);
 
   useEffect(() => {
-    // For loading skeleton
+    // For showing react-loading-skeleton in the `PreviewColumns` component
     setPreviews(null);
 
     const latestChapter = chapters[chapters.length - 1];
-    getPreviewsByChapterAndPage(latestChapter, currentPage).then((data) =>
-      setPreviews(data)
+    getPreviewsByChapterAndPage(latestChapter, currentPage).then(
+      (returnedPreviews) => setPreviews(returnedPreviews)
     );
   }, [chapters, currentPage]);
 
@@ -24,13 +24,9 @@ export default function Series({ title, chapters }) {
     <section className={styles.container}>
       <h2 className={styles.title}>{title}</h2>
 
-      <PreviewThreeColumns
-        previews={previews}
-        currentPage={currentPage}
-        totalPage={totalPage}
-      />
+      <PreviewColumns previews={previews} />
 
-      <PageButtonSet
+      <PaginationButtons
         currentPage={currentPage}
         totalPage={totalPage}
         setCurrentPage={setCurrentPage}

@@ -14,28 +14,27 @@
   z-index: 1;
 }
 
-.left span {
+.heading {
   color: #000;
   font-size: 24px;
-  line-height: 55px;
   transition: 0.2s ease-out;
 }
 
-.left span:hover {
+.heading:hover {
   color: rgb(180, 0, 40);
 }
 
-.right {
+.itemsContainer {
   display: flex;
   gap: 40px;
 }
 
-.right a {
+.itemsContainer a {
   color: #000;
   font-size: 16px;
 }
 
-.right a:hover {
+.itemsContainer a:hover {
   color: rgb(180, 0, 40);
 }
 

@@ -9,8 +9,8 @@ export async function getPreviewsByChapterAndPage(
   page,
   previewNum = 3
 ) {
-  const { articleNum } = chapter;
   let articleIdList = [];
+  const { articleNum } = chapter;
 
   for (let i = 0; i < previewNum; i++) {
     articleIdList.push(articleNum - i - previewNum * (page - 1));
@@ -30,17 +30,17 @@ async function getPreviewByChapterAndArticleId(chapter, articleId) {
   return getArticleByPathAndArticleId(path, articleId).then((articleData) => ({
     ...articleData,
     content: articleData.content.replace(/　/g, "").substring(0, 100) + "⋯⋯",
-    linkTo: `/articles/${path}/${articleId}/${articleData.title}/`,
   }));
 }
 
 export async function getArticleByPathAndArticleId(path, articleId) {
-  const fullArticlePath = `/articles/${path}/${articleId}.json`;
+  const fullPath = `/articles/${path}/${articleId}.json`;
 
-  return fetch(fullArticlePath)
+  return fetch(fullPath)
     .then((response) => response.json())
     .then((data) => ({
       ...data,
       coverImage: `/images/cover/${path}/${data.coverImage}`,
+      linkTo: `/articles/${path}/${articleId}/${data.title}/`,
     }));
 }

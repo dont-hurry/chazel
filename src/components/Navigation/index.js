@@ -1,14 +1,13 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import styles from "./index.module.css";
 import navigationItems from "../../data/navigation-items";
-import Item from "./Item";
+import NavigationItem from "./NavigationItem";
 import FixedNavigation from "./FixedNavigation";
 
 export default function Navigation() {
+  const navigationRef = useRef();
   const [isFixedNavigationVisible, setIsFixedNavigationVisible] =
     useState(false);
-
-  const navigationRef = useRef();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,7 +28,7 @@ export default function Navigation() {
     <>
       <nav className={styles.nav} ref={navigationRef}>
         {navigationItems.map((item, index) => (
-          <Item key={index} item={item} />
+          <NavigationItem key={index} item={item} />
         ))}
       </nav>
 

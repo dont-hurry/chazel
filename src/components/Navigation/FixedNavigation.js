@@ -1,6 +1,7 @@
 import styles from "./FixedNavigation.module.css";
+import { Link } from "react-router-dom";
 import navigationItems from "../../data/navigation-items";
-import Item from "./Item";
+import NavigationItem from "./NavigationItem";
 
 export default function FixedNavigation({ visible }) {
   const navClassName = `${styles.container} ${
@@ -9,13 +10,13 @@ export default function FixedNavigation({ visible }) {
 
   return (
     <nav className={navClassName}>
-      <div className={styles.left}>
-        <span>Chazel</span>
-      </div>
+      <Link to="/" className={styles.heading}>
+        Chazel
+      </Link>
 
-      <div className={styles.right}>
+      <div className={styles.itemsContainer}>
         {navigationItems.map((item, index) => (
-          <Item key={index} item={item} />
+          <NavigationItem key={index} item={item} />
         ))}
       </div>
     </nav>

@@ -1,10 +1,10 @@
-import styles from "./PreviewThreeColumns.module.css";
+import styles from "./PreviewColumns.module.css";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 
-export default function PreviewThreeColumns({ previews }) {
+export default function PreviewColumns({ previews }) {
   return (
-    <div className={styles.threeColumns}>
+    <div className={styles.container}>
       {!previews &&
         new Array(3).fill(null).map((_value, index) => (
           <div key={index} className={styles.column}>
