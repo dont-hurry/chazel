@@ -13,11 +13,7 @@ export default function Main() {
   return (
     <main className={styles.container}>
       {allSeries.map((series) => (
-        <Series
-          key={series.id}
-          title={series.title}
-          chapters={series.chapters}
-        />
+        <Series key={series.id} series={series} />
       ))}
     </main>
   );

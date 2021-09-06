@@ -5,7 +5,7 @@ import Button from "../UI/Button";
 import PreviewColumns from "./PreviewColumns";
 import PaginationButtons from "./PaginationButtons";
 
-export default function Series({ title, chapters }) {
+export default function Series({ series: { anchor, title, chapters } }) {
   const [previews, setPreviews] = useState(null);
   const [currentChapterIndex, setCurrentChapterIndex] = useState(
     chapters.length - 1
@@ -25,7 +25,7 @@ export default function Series({ title, chapters }) {
   }, [chapters, currentChapterIndex, currentPage]);
 
   return (
-    <section className={styles.container}>
+    <section id={anchor} className={styles.container}>
       <h2 className={styles.title}>{title}</h2>
 
       <div className={styles.chapterButtonGroup}>
