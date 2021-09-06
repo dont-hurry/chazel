@@ -44,3 +44,35 @@ export async function getArticleByPathAndArticleId(path, articleId) {
       linkTo: `/articles/${path}/${articleId}/${data.title}/`,
     }));
 }
+
+export async function getSiblingArticles(path, articleId) {
+  const chapter = getChapterByPath(path);
+
+  const result = { previousArticle: null, nextArticle: null };
+
+  const previousArticleId = Number(articleId) - 1;
+  if (previousArticleId >= 1) {
+    const previousArticle = await getArticleByPathAndArticleId(
+      path,
+      previousArticleId
+    );
+    result.previousArticle = previousArticle;
+  }
+
+  const nextArticleId = Number(articleId) + 1;
+  if (nextArticleId <= chapter.articleNum) {
+    const nextArticle = await getArticleByPathAndArticleId(path, nextArticleId);
+    result.nextArticle = nextArticle;
+  }
+
+  return result;
+}
+
+function getChapterByPath(path) {
+  for (let series of allSeries) {
+    for (let chapter of series.chapters) {
+      if (chapter.path.includes(path)) return chapter;
+    }
+  }
+  return null;
+}

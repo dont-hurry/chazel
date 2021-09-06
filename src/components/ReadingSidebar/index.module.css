@@ -1,7 +1,28 @@
 .container {
-  padding: 20px 0 15px 15px;
-  width: 180px;
   display: flex;
   flex-direction: column;
+  padding: 20px 0 15px 15px;
+  width: 180px;
 }
 
+.siblingArticlesButtonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 15px 0;
+}
+
+.siblingArticlesButtonGroup button {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+  text-align: left;
+}
+
+.textSmall {
+  font-size: 14px;
+}
+
+.siblingArticleTitle {
+  line-height: 1.4;
+}

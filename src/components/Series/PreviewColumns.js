@@ -17,7 +17,7 @@ export default function PreviewColumns({ previews }) {
       {previews &&
         previews.map(({ coverImage, title, content, linkTo }) => (
           <div key={title} className={styles.column}>
-            <Link to={linkTo}>
+            <Link to={{ pathname: linkTo, state: { scrollTop: true } }}>
               <img src={coverImage} alt="" className={styles.coverImage} />
             </Link>
             <div className={styles.title}>{title}</div>

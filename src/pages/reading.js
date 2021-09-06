@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getArticleByPathAndArticleId } from "../services/articles";
 import styles from "./reading.module.css";
@@ -10,29 +11,32 @@ export default function Reading({
   lineHeight,
   setLineHeight,
 }) {
-  const [path, setPath] = useState(null);
-  const [articleId, setArticleId] = useState(null);
+  const location = useLocation();
   const [article, setArticle] = useState(null);
 
+  let path, articleId;
+
+  (function extractPathAndArticleId() {
+    const [, , first, second, third] = location.pathname.split("/");
+    if (second.includes("chapter-")) {
+      path = `${first}/${second}`;
+      articleId = third;
+    } else {
+      path = first;
+      articleId = second;
+    }
+  })();
+
   useEffect(() => {
-    // TODO: Use routing with regex instead in `App.js`
-    if (!path || !articleId) {
-      const [, , first, second, third] = window.location.pathname.split("/");
-      if (second.includes("chapter-")) {
-        setPath(`${first}/${second}`);
-        setArticleId(third);
-      } else {
-        setPath(first);
-        setArticleId(second);
-      }
-      return;
+    // `location.state` may be `undefined`
+    if (location.state?.scrollTop) {
+      window.scrollTo(0, 0);
     }
 
-    window.scrollTo(0, 0);
     getArticleByPathAndArticleId(path, articleId).then((returnedArticle) =>
       setArticle(returnedArticle)
     );
-  }, [path, articleId]);
+  }, [location, path, articleId]);
 
   return (
     <div className={styles.outerContainer}>
@@ -50,6 +54,8 @@ export default function Reading({
           setFontSize={setFontSize}
           lineHeight={lineHeight}
           setLineHeight={setLineHeight}
+          path={path}
+          articleId={articleId}
         />
       </div>
     </div>
