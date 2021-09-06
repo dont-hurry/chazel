@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { getArticleByPathAndArticleId } from "../services/articles";
 import styles from "./reading.module.css";
 import Skeleton from "react-loading-skeleton";
@@ -11,6 +11,24 @@ export default function Reading({
   lineHeight,
   setLineHeight,
 }) {
+  const readingAreaRef = useRef();
+  const [isSidebarFixed, setIsSidebarFixed] = useState();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = readingAreaRef.current;
+      if (element.getBoundingClientRect().top < 55) {
+        setIsSidebarFixed(true);
+      } else {
+        setIsSidebarFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const location = useLocation();
   const [article, setArticle] = useState(null);
 
@@ -44,12 +62,17 @@ export default function Reading({
       {!article && <Skeleton className={styles.skeletonTitle} />}
 
       <div className={styles.innerContainer}>
-        <div className={styles.contentWrapper} style={{ fontSize, lineHeight }}>
+        <div
+          className={styles.contentWrapper}
+          style={{ fontSize, lineHeight }}
+          ref={readingAreaRef}
+        >
           {article && article.content}
           {!article && <Skeleton count="10" />}
         </div>
 
         <ReadingSidebar
+          fixed={isSidebarFixed}
           fontSize={fontSize}
           setFontSize={setFontSize}
           lineHeight={lineHeight}

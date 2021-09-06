@@ -9,6 +9,7 @@ import Button from "../UI/Button";
 
 // TODO: Extract getting sibling articles into another component
 export default function ReadingSidebar({
+  fixed,
   fontSize,
   setFontSize,
   lineHeight,
@@ -40,8 +41,14 @@ export default function ReadingSidebar({
     })();
   }, [path, articleId]);
 
+  const fixedStyle = {
+    position: "fixed",
+    top: 55,
+    left: (window.innerWidth - 980) / 2 + 800,
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={fixed ? fixedStyle : {}}>
       <ButtonGroup
         title="字體大小"
         options={fontSizeOptions.options}
