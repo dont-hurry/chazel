@@ -1,7 +1,7 @@
-import styles from "./ButtonGroup.module.css";
+import styles from "./OptionsButtonGroup.module.css";
 import Button from "../UI/Button";
 
-export default function ButtonSet({
+export default function ButtonSetGroup({
   title,
   options,
   currentOption,
