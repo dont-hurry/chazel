@@ -6,8 +6,8 @@ export default function PaginationButtons({
   totalPage,
   setCurrentPage,
 }) {
-  const handleClick = (page) => {
-    if (page !== currentPage) setCurrentPage(page);
+  const handleClick = (targetPage) => {
+    if (targetPage !== currentPage) setCurrentPage(targetPage);
   };
 
   return (

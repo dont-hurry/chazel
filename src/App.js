@@ -10,6 +10,9 @@ import ReadingPage from "./pages/reading";
 import Footer from "./components/Footer";
 
 export default function App() {
+  // - These states are used in `ReadingPage` component.
+  // - We put them here instead of `ReadingPage` component because if the
+  //   component unmounts, the state will lost.
   const [readingFontSize, setReadingFontSize] = useState(
     fontSizeOptions.default
   );

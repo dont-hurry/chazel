@@ -17,6 +17,7 @@ export default function PreviewColumns({ previews }) {
       {previews &&
         previews.map(({ coverImage, title, content, linkTo }) => (
           <div key={title} className={styles.column}>
+            {/* Scroll the page to the top when changing to the reading page */}
             <Link to={{ pathname: linkTo, state: { scrollTop: true } }}>
               <img src={coverImage} alt="" className={styles.coverImage} />
             </Link>

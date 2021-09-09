@@ -1,17 +1,18 @@
 type Series = {
   id: number;
   title: string;
-  anchor: string;
+  anchor: string; // For navigation links
   chapters: Chapter[];
 };
 
 type Chapter = {
   id: number;
-  title?: string;
+  title: string;
   path: string;
   articleNum: number;
 };
 
+// For each series and chapter, `id` is the same as the corresponding index
 const allSeries: Series[] = [
   {
     id: 0,
@@ -45,6 +46,7 @@ const allSeries: Series[] = [
     chapters: [
       {
         id: 0,
+        title: "短篇小說",
         path: "short-story",
         articleNum: 6,
       },
@@ -57,6 +59,7 @@ const allSeries: Series[] = [
     chapters: [
       {
         id: 0,
+        title: "極短篇小說",
         path: "flash-fiction",
         articleNum: 14,
       },
@@ -69,6 +72,7 @@ const allSeries: Series[] = [
     chapters: [
       {
         id: 0,
+        title: "七號圖書館",
         path: "seven-library",
         articleNum: 3,
       },

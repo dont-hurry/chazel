@@ -10,6 +10,7 @@
   position: fixed;
   top: 0;
   width: 100%;
+  /* To make nav stacked above the article cover image */
   z-index: 1;
 }
 
@@ -45,5 +46,6 @@
 .invisible {
   opacity: 0;
   top: -10000px;
+  /* top: duration=0s, delay=0.5s */
   transition: top 0s 0.5s, opacity 0.5s;
 }

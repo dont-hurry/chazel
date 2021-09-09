@@ -1,18 +1,17 @@
 import { useRef, useState, useEffect } from "react";
-import styles from "./index.module.css";
-import navigationItems from "../../data/navigation-items";
-import NavigationItem from "./NavigationItem";
+import NormalNavigation from "./NormalNavigation";
 import FixedNavigation from "./FixedNavigation";
 
 export default function Navigation() {
-  const navigationRef = useRef();
+  const normalNavigationRef = useRef();
+
   const [isFixedNavigationVisible, setIsFixedNavigationVisible] =
     useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const element = navigationRef.current;
-      if (element.getBoundingClientRect().top < -50) {
+      const normalNavigationContainer = normalNavigationRef.current;
+      if (normalNavigationContainer.getBoundingClientRect().top < -50) {
         setIsFixedNavigationVisible(true);
       } else {
         setIsFixedNavigationVisible(false);
@@ -26,12 +25,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={styles.nav} ref={navigationRef}>
-        {navigationItems.map((item, index) => (
-          <NavigationItem key={index} item={item} />
-        ))}
-      </nav>
-
+      <NormalNavigation ref={normalNavigationRef} />
       <FixedNavigation visible={isFixedNavigationVisible} />
     </>
   );

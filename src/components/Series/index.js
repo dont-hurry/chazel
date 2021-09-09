@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getPreviewsByChapterAndPage } from "../../services/articles";
 import styles from "./index.module.css";
-import Button from "../UI/Button";
+import ChapterButtonGroup from "./ChapterButtonGroup";
 import PreviewColumns from "./PreviewColumns";
 import PaginationButtons from "./PaginationButtons";
 
@@ -11,7 +11,6 @@ export default function Series({ series: { anchor, title, chapters } }) {
     chapters.length - 1
   );
   const [currentPage, setCurrentPage] = useState(1);
-
   const totalPage = Math.ceil(chapters[currentChapterIndex].articleNum / 3);
 
   useEffect(() => {
@@ -28,18 +27,11 @@ export default function Series({ series: { anchor, title, chapters } }) {
     <section id={anchor} className={styles.container}>
       <h2 className={styles.title}>{title}</h2>
 
-      <div className={styles.chapterButtonGroup}>
-        {chapters.length > 1 &&
-          chapters.map((chapter) => (
-            <Button
-              key={chapter.id}
-              active={chapter.id === currentChapterIndex}
-              onClick={() => setCurrentChapterIndex(chapter.id)}
-            >
-              {chapter.title}
-            </Button>
-          ))}
-      </div>
+      <ChapterButtonGroup
+        chapters={chapters}
+        currentChapterIndex={currentChapterIndex}
+        setCurrentChapterIndex={setCurrentChapterIndex}
+      />
 
       <PreviewColumns previews={previews} />
 
