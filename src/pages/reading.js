@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getArticleByPathAndArticleId } from "../services/articles";
 import styles from "./reading.module.css";
 import Skeleton from "react-loading-skeleton";
@@ -11,37 +11,23 @@ export default function Reading({
   lineHeight,
   setLineHeight,
 }) {
-  const readingAreaRef = useRef();
-  const [isSidebarFixed, setIsSidebarFixed] = useState();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const element = readingAreaRef.current;
-      if (element.getBoundingClientRect().top < 55) {
-        setIsSidebarFixed(true);
-      } else {
-        setIsSidebarFixed(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const location = useLocation();
   const [article, setArticle] = useState(null);
 
   let path, articleId;
-
   (function extractPathAndArticleId() {
-    const [, , first, second, third] = location.pathname.split("/");
-    if (second.includes("chapter-")) {
-      path = `${first}/${second}`;
-      articleId = third;
+    let matcher =
+      /\/articles\/(?<Series>[\w-]+)\/(?<ChapterOrArticleId>[\w-]+)\/(?<ArticleIdOrTitle>[\w-%]+)/;
+
+    let matchResult = window.location.pathname.match(matcher);
+    const { Series, ChapterOrArticleId, ArticleIdOrTitle } = matchResult.groups;
+
+    if (ChapterOrArticleId.includes("chapter-")) {
+      path = `${Series}/${ChapterOrArticleId}`;
+      articleId = ArticleIdOrTitle;
     } else {
-      path = first;
-      articleId = second;
+      path = Series;
+      articleId = ChapterOrArticleId;
     }
   })();
 
@@ -56,6 +42,24 @@ export default function Reading({
     );
   }, [location, path, articleId]);
 
+  const articleContentRef = useRef();
+  const [isSidebarFixed, setIsSidebarFixed] = useState();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const element = articleContentRef.current;
+      if (element.getBoundingClientRect().top < 55) {
+        setIsSidebarFixed(true);
+      } else {
+        setIsSidebarFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className={styles.outerContainer}>
       {article && <h2 className={styles.title}>{article.title}</h2>}
@@ -65,7 +69,7 @@ export default function Reading({
         <div
           className={styles.contentWrapper}
           style={{ fontSize, lineHeight }}
-          ref={readingAreaRef}
+          ref={articleContentRef}
         >
           {article && article.content}
           {!article && <Skeleton count="10" />}

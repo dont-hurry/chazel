@@ -42,7 +42,12 @@ export async function getArticleByPathAndArticleId(path, articleId) {
       ...data,
       coverImage: `/images/cover/${path}/${data.coverImage}`,
       linkTo: `/articles/${path}/${articleId}/${data.title}/`,
-    }));
+    }))
+    /*
+    .then(
+      (data) => new Promise((resolve) => setTimeout(() => resolve(data), 100000))
+    );
+    */
 }
 
 export async function getSiblingArticles(path, articleId) {
