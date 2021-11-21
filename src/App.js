@@ -10,14 +10,14 @@ import ReadingPage from "./pages/reading";
 import Footer from "./components/Footer";
 
 export default function App() {
-  // - These states are used in `ReadingPage` component.
-  // - We put them here instead of `ReadingPage` component because if the
-  //   component unmounts, the state will lost.
+  // - These states are used in the `ReadingPage` component.
+  // - We put them here (instead the of `ReadingPage` component) because if the
+  //   `ReadingPage` component unmounts, the state will be lost.
   const [readingFontSize, setReadingFontSize] = useState(
-    fontSizeOptions.default
+    fontSizeOptions.defaultValue
   );
   const [readingLineHeight, setReadingLineHeight] = useState(
-    lineHeightOptions.default
+    lineHeightOptions.defaultValue
   );
 
   return (

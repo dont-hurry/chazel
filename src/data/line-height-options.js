@@ -1,5 +1,5 @@
 const lineHeightOptions = {
-  default: 2,
+  defaultValue: 2,
   options: [
     {
       label: "小",

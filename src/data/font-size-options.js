@@ -1,5 +1,5 @@
 const fontSizeOptions = {
-  default: 18,
+  defaultValue: 18,
   options: [
     {
       label: "小",
