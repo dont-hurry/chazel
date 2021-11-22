@@ -1,6 +1,6 @@
 .container {
   background: rgb(25, 25, 25);
-  display: grid;
+  display: grid; /* for centering the content */
   padding: 40px 0;
   place-items: center;
 }
@@ -11,7 +11,7 @@
   grid-template-columns: 1fr 1fr;
 }
 
-.about {
+.aboutText {
   color: rgb(180, 180, 180);
   font-size: 18px;
   grid-column: 1 / span 2;

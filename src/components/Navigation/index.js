@@ -11,7 +11,9 @@ export default function Navigation() {
   useEffect(() => {
     const handleScroll = () => {
       const normalNavigationContainer = normalNavigationRef.current;
-      if (normalNavigationContainer.getBoundingClientRect().top < -50) {
+
+      // height of `.nav` is 50px
+      if (normalNavigationContainer.getBoundingClientRect().top <= -50) {
         setIsFixedNavigationVisible(true);
       } else {
         setIsFixedNavigationVisible(false);

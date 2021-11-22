@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className={styles.container}>
       <div className={styles.gridWrapper}>
-        <div className={styles.about}>關於</div>
+        <div className={styles.aboutText}>關於</div>
         <Column
           imageSource="/images/chazel.jpeg"
           name="文章 - 陳建佐 Chazel"

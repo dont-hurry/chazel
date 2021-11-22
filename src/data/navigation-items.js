@@ -1,14 +1,16 @@
 const navigationItems = [
-  { href: "/#novel", text: "長篇小說 - 泣城" },
-  { href: "/#short-story", text: "短篇小說" },
-  { href: "/#flash-fiction", text: "極短篇小說" },
-  { href: "/#seven-library", text: "七號圖書館" },
+  { id: 0, href: "/#novel", text: "長篇小說 - 泣城" },
+  { id: 1, href: "/#short-story", text: "短篇小說" },
+  { id: 2, href: "/#flash-fiction", text: "極短篇小說" },
+  { id: 3, href: "/#seven-library", text: "七號圖書館" },
   {
+    id: 4,
     href: "http://home.gamer.com.tw/homeindex.php?owner=Chazel315",
     target: "_blank",
     text: "巴哈姆特小屋",
   },
   {
+    id: 5,
     href: "http://www.popo.tw/books/538677",
     target: "_blank",
     text: "POPO原創市集",

@@ -15,8 +15,8 @@ export default function FixedNavigation({ visible }) {
       </Link>
 
       <div className={styles.itemsContainer}>
-        {navigationItems.map((item, index) => (
-          <NavigationItem key={index} item={item} />
+        {navigationItems.map((item) => (
+          <NavigationItem key={item.id} item={item} />
         ))}
       </div>
     </nav>

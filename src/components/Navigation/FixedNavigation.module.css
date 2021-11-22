@@ -45,7 +45,8 @@
 
 .invisible {
   opacity: 0;
-  top: -10000px;
-  /* top: duration=0s, delay=0.5s */
-  transition: top 0s 0.5s, opacity 0.5s;
+  transform: translateY(-10000px); /* Move the navigation out of the viewport */
+
+  /* transition: property name | duration | delay */
+  transition: opacity 0.5s 0s, transform 0s 0.5s;
 }

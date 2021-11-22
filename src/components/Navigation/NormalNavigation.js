@@ -6,8 +6,8 @@ import NavigationItem from "./NavigationItem";
 export default forwardRef(function NormalNavigation(_props, ref) {
   return (
     <nav className={styles.nav} ref={ref}>
-      {navigationItems.map((item, index) => (
-        <NavigationItem key={index} item={item} />
+      {navigationItems.map((item) => (
+        <NavigationItem key={item.id} item={item} />
       ))}
     </nav>
   );
