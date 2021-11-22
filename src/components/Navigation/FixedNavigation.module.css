@@ -40,7 +40,9 @@
 
 .visible {
   opacity: 1;
-  transition: top 0s, opacity 0.5s;
+
+  /* transition: property name | duration | delay */
+  transition: opacity 0.5s 0s, transform 0s 0s;
 }
 
 .invisible {
