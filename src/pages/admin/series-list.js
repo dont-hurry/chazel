@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import { getAllSeries, createSeries } from "../../services/articles";
+import {
+  getAllSeries,
+  createSeries,
+  deleteSeries,
+} from "../../services/articles";
 import AdminLayout from "../../components/Layout/AdminLayout";
 import Button from "../../components/UI/Button";
 import styles from "./base.module.css";
@@ -11,9 +15,9 @@ import Select from "../../components/UI/Select";
 
 export default function SeriesListPage() {
   let [allSeries, setAllSeries] = useState([]);
-  let [showCreateModal, setShowCreateModal] = useState(true);
-  let [showDeleteModal, setShowDeleteModal] = useState(false);
+  let [showCreateModal, setShowCreateModal] = useState(false);
   let [showUpdateModal, setShowUpdateModal] = useState(false);
+  let [showDeleteModal, setShowDeleteModal] = useState(false);
   let [targetSeries, setTargetSeries] = useState(null); // The target series for editing/removing
 
   useEffect(() => {
@@ -46,20 +50,26 @@ export default function SeriesListPage() {
       </div>
 
       {showCreateModal && (
-        <CreateModal setShowCreateModal={setShowCreateModal} />
+        <CreateModal
+          allSeries={allSeries}
+          setAllSeries={setAllSeries}
+          setShowCreateModal={setShowCreateModal}
+        />
       )}
 
       {showUpdateModal && (
         <UpdateModal
-          targetSeries={targetSeries}
           setShowUpdateModal={setShowUpdateModal}
+          targetSeries={targetSeries}
         />
       )}
 
       {showDeleteModal && (
         <DeleteModal
-          targetSeries={targetSeries}
+          allSeries={allSeries}
+          setAllSeries={setAllSeries}
           setShowDeleteModal={setShowDeleteModal}
+          targetSeries={targetSeries}
         />
       )}
     </AdminLayout>
@@ -103,22 +113,25 @@ function SeriesRow({
   );
 }
 
-function CreateModal({ setShowCreateModal }) {
+function CreateModal({ allSeries, setAllSeries, setShowCreateModal }) {
   const formRef = useRef();
 
-  const handleSubmit = () => {
-    let formEl = formRef.current;
+  const handleConfirm = async (e) => {
+    e.preventDefault();
 
+    let formElement = formRef.current;
     const newSeries = {
-      title: formEl.querySelector("input").value,
-      showChapterButtons: formEl.querySelector("select").value === "true",
+      title: formElement.querySelector("input").value,
+      showChapterButtons: formElement.querySelector("select").value === "true",
     };
+    const returnedSeries = await createSeries(newSeries);
 
-    createSeries(newSeries);
+    setAllSeries([...allSeries, returnedSeries]);
+    setShowCreateModal(false);
   };
 
   const content = (
-    <form className={styles.form} ref={formRef}>
+    <form className={styles.form} ref={formRef} onSubmit={handleConfirm}>
       <div className={styles.formInputGroup}>
         <label htmlFor="series-input-title">系列標題</label>
         <Input id="series-input-title" placeholder="系列標題" />
@@ -139,13 +152,13 @@ function CreateModal({ setShowCreateModal }) {
     <Modal
       title="新增系列"
       content={content}
-      confirmHandler={handleSubmit}
+      confirmHandler={handleConfirm}
       cancelHandler={() => setShowCreateModal(false)}
     />
   );
 }
 
-function UpdateModal({ targetSeries, setShowUpdateModal }) {
+function UpdateModal({ setShowUpdateModal, targetSeries }) {
   return (
     <Modal
       title="編輯系列"
@@ -155,12 +168,24 @@ function UpdateModal({ targetSeries, setShowUpdateModal }) {
   );
 }
 
-function DeleteModal({ targetSeries, setShowDeleteModal }) {
+function DeleteModal({
+  allSeries,
+  setAllSeries,
+  setShowDeleteModal,
+  targetSeries,
+}) {
+  const handleConfirm = async () => {
+    deleteSeries(targetSeries.id);
+
+    setAllSeries(allSeries.filter((s) => s.id !== targetSeries.id));
+    setShowDeleteModal(false);
+  };
+
   return (
     <Modal
       title="刪除系列"
       content={`你確定要刪除「${targetSeries.title}」？`}
-      confirmHandler={() => console.log("todo")}
+      confirmHandler={handleConfirm}
       cancelHandler={() => setShowDeleteModal(false)}
     />
   );

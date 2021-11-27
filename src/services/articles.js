@@ -50,38 +50,6 @@ export async function getArticleByArticleId(articleId) {
 export async function getSiblingArticlesByArticleId(articleId) {
   const response = await axios.get(`${baseUrl}/sibling-articles/${articleId}`);
   return response.data;
-  /*
-  const chapter = await getChapterByPath(path);
-
-  const result = { previousArticle: null, nextArticle: null };
-
-  // Note that `articleId` is parsed from the pathname and it's a string
-  const previousArticleId = Number(articleId) - 1;
-  if (previousArticleId >= 1) {
-    const previousArticle = await getArticleByArticleId(previousArticleId);
-    result.previousArticle = previousArticle;
-  }
-
-  const nextArticleId = Number(articleId) + 1;
-  if (nextArticleId <= chapter.articleNum) {
-    const nextArticle = await getArticleByArticleId(nextArticleId);
-    result.nextArticle = nextArticle;
-  }
-
-  return result;
-  */
-}
-
-async function getChapterByPath(path) {
-  let allSeries = await getAllSeries();
-
-  for (let series of allSeries) {
-    for (let chapter of series.chapters) {
-      if (chapter.path === path) return chapter;
-    }
-  }
-
-  return null;
 }
 
 export async function getSeriesTitleBySeriesId(seriesId) {
@@ -109,7 +77,6 @@ export async function getArticlesBySeriesIdAndChapterId({
 }) {
   let allSeries = await getAllSeries();
   let chapter = allSeries[seriesId].chapters[chapterId];
-  let path = chapter.path;
 
   return Promise.all(
     new Array(chapter.articleNum).fill(null).map((value, index) => {
@@ -121,5 +88,9 @@ export async function getArticlesBySeriesIdAndChapterId({
 
 export async function createSeries(newSeries) {
   const response = await axios.post(`${baseUrl}/series`, newSeries);
-  console.log(response.data);
+  return response.data;
+}
+
+export async function deleteSeries(seriesId) {
+  await axios.delete(`${baseUrl}/series/${seriesId}`);
 }

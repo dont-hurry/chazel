@@ -7,7 +7,8 @@ export default function AddArticlePage() {
   const location = useLocation();
   if (!location.state) return null;
 
-  const { seriesId, chapterId, seriesTitle, chapterTitle } = location.state;
+  // const { seriesId, chapterId, seriesTitle, chapterTitle } = location.state;
+  const { seriesTitle, chapterTitle } = location.state;
 
   return (
     <AdminLayout title="新增文章">
