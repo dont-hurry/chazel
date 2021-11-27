@@ -14,9 +14,7 @@ export default function MainPage() {
   return (
     <MainLayout>
       <main className={styles.container}>
-        {allSeries.length === 0 && (
-          <div className={styles.placeholder}></div>
-        )}
+        {allSeries.length === 0 && <div className={styles.placeholder}></div>}
 
         {allSeries.map((series) => (
           <Series key={series.id} series={series} />

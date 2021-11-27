@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getArticleByPathAndArticleId } from "../services/articles";
+import { getArticleByArticleId } from "../services/articles";
 import MainLayout from "../components/Layout/MainLayout";
 import styles from "./reading.module.css";
 import Skeleton from "react-loading-skeleton";
@@ -11,8 +11,7 @@ import ReadingSidebar from "../components/ReadingSidebar";
 //    Example: /articles/novel/chapter-3/4/some-title
 // 2. /articles/<Series>/<ArticleId>/<Title>
 //    Example: /articles/short-story/7/some-title
-const matcher =
-  /\/articles\/(?<Series>[\w-]+)\/(?<ChapterOrArticleId>[\w-]+)\/(?<ArticleIdOrTitle>[\w-%]+)/;
+const matcher = /\/articles\/(?<articleId>[\w]+)/;
 
 export default function ReadingPage({
   fontSize,
@@ -25,17 +24,7 @@ export default function ReadingPage({
   const [isLoading, setIsLoading] = useState(true);
 
   let matchResult = window.location.pathname.match(matcher);
-  const { Series, ChapterOrArticleId, ArticleIdOrTitle } = matchResult.groups;
-
-  let path, articleId;
-
-  if (ChapterOrArticleId.includes("chapter-")) {
-    path = `${Series}/${ChapterOrArticleId}`;
-    articleId = ArticleIdOrTitle;
-  } else {
-    path = Series;
-    articleId = ChapterOrArticleId;
-  }
+  const { articleId } = matchResult.groups;
 
   useEffect(() => {
     if (location.state?.scrollTop) {
@@ -44,11 +33,11 @@ export default function ReadingPage({
 
     setIsLoading(true);
 
-    getArticleByPathAndArticleId({ path, articleId }).then((returnedData) => {
+    getArticleByArticleId(articleId).then((returnedData) => {
       setArticle(returnedData);
       setIsLoading(false);
     });
-  }, [location, path, articleId]);
+  }, [location, articleId]);
   // We add `location` as a dependency here to make the component rerender when
   // the url changes
 
@@ -72,7 +61,6 @@ export default function ReadingPage({
             setFontSize={setFontSize}
             lineHeight={lineHeight}
             setLineHeight={setLineHeight}
-            path={path}
             articleId={articleId}
           />
         </div>

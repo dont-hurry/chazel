@@ -1,57 +1,56 @@
 import axios from "axios";
 
-const baseUrl = "https://stormy-headland-37546.herokuapp.com/api";
+// const baseUrl = "https://stormy-headland-37546.herokuapp.com/api";
+const baseUrl = "http://localhost:3001/api";
 
 export async function getAllSeries() {
-  const request = axios.get(`${baseUrl}/series`);
-  return request.then((response) => response.data);
+  const response = await axios.get(`${baseUrl}/series`);
+  return response.data;
 }
 
 export async function getPreviewsByChapterAndPage({ chapter, page }) {
   const PREVIEW_NUM = 3;
 
-  let articleIdList = [];
-  const { articleNum } = chapter;
+  let { articles } = chapter;
 
+  let articleIndexList = [];
   for (let i = 0; i < PREVIEW_NUM; i++) {
-    articleIdList.push(articleNum - PREVIEW_NUM * (page - 1) - i);
+    articleIndexList.push(articles.length - 1 - PREVIEW_NUM * (page - 1) - i);
   }
-  articleIdList = articleIdList.filter((articleId) => articleId > 0);
+  articleIndexList = articleIndexList.filter((i) => i >= 0);
+
+  let articleIdList = articleIndexList.map((i) => articles[i]);
 
   return Promise.all(
-    articleIdList.map((articleId) =>
-      getPreviewByChapterAndArticleId({ chapter, articleId })
-    )
+    articleIdList.map((articleId) => getArticlePreviewByArticleId(articleId))
   );
 }
 
-async function getPreviewByChapterAndArticleId({ chapter, articleId }) {
-  const { path } = chapter;
-
-  return getArticleByPathAndArticleId({ path, articleId }).then(
-    (articleData) => ({
-      ...articleData,
-      preview: articleData.content.replace(/　/g, "").substring(0, 100) + "⋯⋯",
-    })
-  );
+export async function getChapterById(chapterId) {
+  const response = await axios.get(`${baseUrl}/chapters`);
+  const chapters = response.data;
+  return chapters.find((chapter) => chapter.id === chapterId);
 }
 
-export async function getArticleByPathAndArticleId({ path, articleId }) {
-  const fullPath = `${baseUrl}/articles/${path}/${articleId}`;
-
-  return fetch(fullPath)
-    .then((response) => response.json())
-    .then((data) => ({
+async function getArticlePreviewByArticleId(articleId) {
+  return getArticleByArticleId(articleId).then((data) => {
+    return {
       ...data,
-      coverImage: `/images/cover/${path}/${data.coverImage}`,
-      url: `/articles/${path}/${articleId}/${data.title}/`,
-    }));
+      preview: data.content.replace(/　/g, "").substring(0, 100) + "⋯⋯",
+    };
+  });
 }
 
-export async function getSiblingArticlesByPathAndArticleId({
-  path,
-  articleId,
-}) {
+export async function getArticleByArticleId(articleId) {
+  const url = `${baseUrl}/articles/${articleId}`;
+
+  return fetch(url).then((response) => response.json());
+}
+
+export async function getSiblingArticlesByArticleId(articleId) {
+  const response = await axios.get(`${baseUrl}/sibling-articles/${articleId}`);
+  return response.data;
+  /*
   const chapter = await getChapterByPath(path);
 
   const result = { previousArticle: null, nextArticle: null };
@@ -59,23 +58,18 @@ export async function getSiblingArticlesByPathAndArticleId({
   // Note that `articleId` is parsed from the pathname and it's a string
   const previousArticleId = Number(articleId) - 1;
   if (previousArticleId >= 1) {
-    const previousArticle = await getArticleByPathAndArticleId({
-      path,
-      articleId: previousArticleId,
-    });
+    const previousArticle = await getArticleByArticleId(previousArticleId);
     result.previousArticle = previousArticle;
   }
 
   const nextArticleId = Number(articleId) + 1;
   if (nextArticleId <= chapter.articleNum) {
-    const nextArticle = await getArticleByPathAndArticleId({
-      path,
-      articleId: nextArticleId,
-    });
+    const nextArticle = await getArticleByArticleId(nextArticleId);
     result.nextArticle = nextArticle;
   }
 
   return result;
+  */
 }
 
 async function getChapterByPath(path) {
@@ -120,7 +114,12 @@ export async function getArticlesBySeriesIdAndChapterId({
   return Promise.all(
     new Array(chapter.articleNum).fill(null).map((value, index) => {
       let articleId = index + 1;
-      return getArticleByPathAndArticleId({ path, articleId });
+      return getArticleByArticleId(articleId);
     })
   );
+}
+
+export async function createSeries(newSeries) {
+  const response = await axios.post(`${baseUrl}/series`, newSeries);
+  console.log(response.data);
 }

@@ -1,17 +1,69 @@
-.table {
-  font-size: 18px;
-  padding-bottom: 40px;
+.tableHeader {
+  color: rgba(0, 0, 0, 0.4);
+  margin: 25px 0 20px;
 }
 
-.tableGridSeriesList,
-.tableGridChapterList,
-.tableGridArticleList {
-  align-items: center;
+.tableRow,
+.tableRowWithBackground {
   display: grid;
 }
 
+.tableRow > div:first-child,
+.tableRowWithBackground > div:first-child {
+  padding-left: 25px;
+}
+
+.tableRowWithBackground {
+  background: #fff;
+  border-radius: 5px;
+  color: #000;
+  cursor: pointer;
+  padding: 25px 0;
+}
+
+.tableRowWithBackground:hover {
+  background: rgba(0, 0, 0, 0.025);
+}
+
 .tableGridSeriesList {
-  grid-template-columns: 600px 250px 150px;
+  grid-template-columns: 500px 200px 220px 80px;
+}
+
+.tableBody {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.iconWrapper {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+
+.iconWrapper svg {
+  height: 20px;
+  width: 20px;
+}
+
+.iconWrapper svg:hover {
+  stroke: rgb(215, 65, 120);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+}
+
+.formInputGroup label {
+  display: block;
+  margin-bottom: 10px;
+}
+/*
+.tableGridSeriesList {
+  grid-template-columns: 550px 200px 150px 100px;
 }
 
 .tableGridChapterList {
@@ -19,40 +71,7 @@
 }
 
 .tableGridArticleList {
-  font-size: 16px;
   grid-template-columns: 280px 500px 120px 100px;
-}
-
-.tableGridSeriesList > div:first-child,
-.tableGridChapterList > div:first-child,
-.tableGridArticleList > div:first-child {
-  padding-left: 25px;
-}
-
-.tableHeader {
-  color: rgba(0, 0, 0, 0.4);
-  margin: 25px 0 20px;
-}
-
-.tableBody {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.tableBody a {
-  color: black;
-}
-
-.tableRow {
-  background: #fff;
-  border-radius: 10px;
-  cursor: pointer;
-  padding: 25px 0;
-}
-
-.tableRow:hover {
-  box-shadow: 0 0 0 2.5px rgb(215, 65, 120);
 }
 
 .preview {
@@ -76,3 +95,4 @@
 .formGrid > div:nth-child(2n + 1) {
   justify-self: right;
 }
+*/

@@ -5,7 +5,7 @@ export default function Button({ active, children, onClick }) {
   if (active) className += ` ${styles.active}`;
 
   return (
-    <button className={className} onClick={onClick}>
+    <button className={className} onClick={onClick} type="submit">
       {children}
     </button>
   );

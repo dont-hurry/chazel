@@ -1,8 +1,18 @@
+import { useState, useEffect } from "react";
 import styles from "./PreviewColumns.module.css";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
+import { getPreviewsByChapterAndPage } from "../../services/articles";
 
-export default function PreviewColumns({ previews }) {
+export default function PreviewColumns({ chapter, page }) {
+  const [previews, setPreviews] = useState(null);
+
+  useEffect(() => {
+    getPreviewsByChapterAndPage({ chapter, page }).then((returnedData) =>
+      setPreviews(returnedData)
+    );
+  }, [chapter, page]);
+
   return (
     <div className={styles.container}>
       {!previews &&
@@ -15,16 +25,24 @@ export default function PreviewColumns({ previews }) {
         ))}
 
       {previews &&
-        previews.map(({ coverImage, title, preview, url }) => (
-          <div key={title} className={styles.column}>
-            {/* Scroll the page to the top when navigating to the reading page */}
-            <Link to={{ pathname: url, state: { scrollTop: true } }}>
-              <img src={coverImage} alt="" className={styles.coverImage} />
-            </Link>
-            <div className={styles.title}>{title}</div>
-            <div className={styles.preview}>{preview}</div>
-          </div>
-        ))}
+        previews.map(({ articleId, coverImage, title, preview }) => {
+          const url = `/articles/${articleId}`;
+
+          return (
+            <div key={title} className={styles.column}>
+              {/* Scroll the page to the top when navigating to the reading page */}
+              <Link to={{ pathname: url, state: { scrollTop: true } }}>
+                <img
+                  src={`images/cover/${coverImage}`}
+                  alt=""
+                  className={styles.coverImage}
+                />
+              </Link>
+              <div className={styles.title}>{title}</div>
+              <div className={styles.preview}>{preview}</div>
+            </div>
+          );
+        })}
     </div>
   );
 }

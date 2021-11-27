@@ -4,11 +4,30 @@
 }
 
 .container {
+  font-size: 16px;
   margin: 0 auto;
+  padding-bottom: 40px;
   width: 1000px;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding: 60px 0 25px;
+}
+
+.header > svg {
+  cursor: pointer;
+  height: 24px;
+  stroke: rgba(0, 0, 0, 0.2);
+  width: 24px;
+}
+
+.header > svg:hover {
+  stroke: #000;
 }
 
 .heading {
   font-size: 22px;
-  padding: 60px 0 25px;
 }

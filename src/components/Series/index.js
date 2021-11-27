@@ -1,30 +1,28 @@
 import { useState, useEffect } from "react";
-import { getPreviewsByChapterAndPage } from "../../services/articles";
+import { getChapterById } from "../../services/articles";
 import styles from "./index.module.css";
 import ChapterButtonGroup from "./ChapterButtonGroup";
 import PreviewColumns from "./PreviewColumns";
 import PaginationButtons from "./PaginationButtons";
 
 export default function Series({
-  series: { title, anchor, showChapterButtons, chapters },
+  series: { title, anchor, showChapterButtons, chapters: chapterIdList },
 }) {
-  const [previews, setPreviews] = useState(null);
-  const [currentChapterIndex, setCurrentChapterIndex] = useState(
-    chapters.length - 1
+  const [currentChapter, setCurrentChapter] = useState(null);
+  const [currentChapterId, setCurrentChapterId] = useState(
+    chapterIdList[chapterIdList.length - 1]
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPage = Math.ceil(chapters[currentChapterIndex].articleNum / 3);
+
+  const totalPage = currentChapter
+    ? Math.ceil(currentChapter.articles.length / 3)
+    : 1;
 
   useEffect(() => {
-    // Make `react-loading-skeleton` shown (in the `PreviewColumns` component)
-    // when clicking on buttons navigation to another chapter
-    setPreviews(null);
-
-    getPreviewsByChapterAndPage({
-      chapter: chapters[currentChapterIndex],
-      page: currentPage,
-    }).then((returnedData) => setPreviews(returnedData));
-  }, [chapters, currentChapterIndex, currentPage]);
+    getChapterById(currentChapterId).then((returnedData) =>
+      setCurrentChapter(returnedData)
+    );
+  }, [currentChapterId]);
 
   return (
     <section id={anchor} className={styles.container}>
@@ -32,14 +30,16 @@ export default function Series({
 
       {showChapterButtons && (
         <ChapterButtonGroup
-          chapters={chapters}
-          currentChapterIndex={currentChapterIndex}
-          setCurrentChapterIndex={setCurrentChapterIndex}
+          chapterIdList={chapterIdList}
+          currentChapterId={currentChapterId}
+          setCurrentChapterId={setCurrentChapterId}
           setCurrentPage={setCurrentPage}
         />
       )}
 
-      <PreviewColumns previews={previews} />
+      {currentChapter && (
+        <PreviewColumns chapter={currentChapter} page={currentPage} />
+      )}
 
       <PaginationButtons
         currentPage={currentPage}

@@ -11,7 +11,6 @@ export default function ReadingSidebar({
   setFontSize,
   lineHeight,
   setLineHeight,
-  path,
   articleId,
 }) {
   return (
@@ -29,7 +28,7 @@ export default function ReadingSidebar({
         setOption={setLineHeight}
       />
 
-      <SiblingArticlesButtonGroup path={path} articleId={articleId} />
+      <SiblingArticlesButtonGroup articleId={articleId} />
     </div>
   );
 }
