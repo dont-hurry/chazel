@@ -5,6 +5,7 @@
 
 .tableRow,
 .tableRowWithBackground {
+  align-items: center;
   display: grid;
 }
 
@@ -29,6 +30,14 @@
   grid-template-columns: 500px 200px 220px 80px;
 }
 
+.tableGridChapterList {
+  grid-template-columns: 770px 150px 80px;
+}
+
+.tableGridArticleList {
+  grid-template-columns: 260px 520px 140px 80px;
+}
+
 .tableBody {
   display: flex;
   flex-direction: column;
@@ -39,6 +48,14 @@
   align-items: center;
   display: flex;
   gap: 10px;
+}
+
+.iconWrapper {
+  font-size: 0; /* Remove offsets created by links */
+}
+
+.iconWrapper a {
+  color: initial;
 }
 
 .iconWrapper svg {
@@ -54,45 +71,20 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 300px;
 }
 
 .formInputGroup label {
   display: block;
   margin-bottom: 10px;
 }
-/*
-.tableGridSeriesList {
-  grid-template-columns: 550px 200px 150px 100px;
-}
 
-.tableGridChapterList {
-  grid-template-columns: 850px 150px;
-}
-
-.tableGridArticleList {
-  grid-template-columns: 280px 500px 120px 100px;
+.formButtonGroup {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 .preview {
   line-height: 1.6;
   padding-right: 25px;
 }
-
-.buttonGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.formGrid {
-  display: grid;
-  font-size: 18px;
-  gap: 20px 30px;
-  grid-template-columns: 100px auto;
-}
-
-.formGrid > div:nth-child(2n + 1) {
-  justify-self: right;
-}
-*/

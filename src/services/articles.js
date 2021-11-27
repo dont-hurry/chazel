@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const baseUrl = "https://stormy-headland-37546.herokuapp.com/api";
-const baseUrl = "http://localhost:3001/api";
+const baseUrl = "https://stormy-headland-37546.herokuapp.com/api";
+// const baseUrl = "http://localhost:3001/api";
 
 export async function getAllSeries() {
   const response = await axios.get(`${baseUrl}/series`);
@@ -34,9 +34,13 @@ export async function getChapterById(chapterId) {
 
 async function getArticlePreviewByArticleId(articleId) {
   return getArticleByArticleId(articleId).then((data) => {
+    let content = data.content.replace(/　/g, "");
+    let preview =
+      content.length > 100 ? content.substring(0, 100) + "⋯⋯" : content;
+
     return {
       ...data,
-      preview: data.content.replace(/　/g, "").substring(0, 100) + "⋯⋯",
+      preview,
     };
   });
 }
@@ -52,38 +56,21 @@ export async function getSiblingArticlesByArticleId(articleId) {
   return response.data;
 }
 
-export async function getSeriesTitleBySeriesId(seriesId) {
+export async function getSeriesById(seriesId) {
   let allSeries = await getAllSeries();
-  return allSeries[seriesId].title;
+  return allSeries.find((s) => s.id === seriesId);
 }
 
 export async function getChaptersBySeriesId(seriesId) {
-  let allSeries = await getAllSeries();
-  return allSeries[seriesId].chapters;
+  let { chapters } = await getSeriesById(seriesId);
+  let result = await Promise.all(chapters.map((c) => getChapterById(c)));
+  return result;
 }
 
-export async function getChapterTitleBySeriesIdAndChapterId({
-  seriesId,
-  chapterId,
-}) {
-  let allSeries = await getAllSeries();
-  let chapter = allSeries[seriesId].chapters[chapterId];
-  return chapter.title;
-}
-
-export async function getArticlesBySeriesIdAndChapterId({
-  seriesId,
-  chapterId,
-}) {
-  let allSeries = await getAllSeries();
-  let chapter = allSeries[seriesId].chapters[chapterId];
-
-  return Promise.all(
-    new Array(chapter.articleNum).fill(null).map((value, index) => {
-      let articleId = index + 1;
-      return getArticleByArticleId(articleId);
-    })
-  );
+export async function getArticlesByChapterId(chapterId) {
+  let { articles } = await getChapterById(chapterId);
+  let result = await Promise.all(articles.map((a) => getArticleByArticleId(a)));
+  return result;
 }
 
 export async function createSeries(newSeries) {
@@ -91,10 +78,46 @@ export async function createSeries(newSeries) {
   return response.data;
 }
 
-export async function deleteSeries(seriesId) {
-  await axios.delete(`${baseUrl}/series/${seriesId}`);
+export async function createChapter(newChapter, seriesId) {
+  const response = await axios.post(`${baseUrl}/chapters`, {
+    newChapter,
+    seriesId,
+  });
+  return response.data;
+}
+
+export async function createArticle(newArticle, chapterId) {
+  const response = await axios.post(`${baseUrl}/articles`, {
+    newArticle,
+    chapterId,
+  });
+  return response.data;
 }
 
 export async function updateSeries(seriesId, newSeries) {
   await axios.put(`${baseUrl}/series/${seriesId}`, newSeries);
+}
+
+export async function updateChapter(chapterId, newChapter) {
+  await axios.put(`${baseUrl}/chapters/${chapterId}`, newChapter);
+}
+
+export async function updateArticle(articleId, newArticle) {
+  await axios.put(`${baseUrl}/articles/${articleId}`, newArticle);
+}
+
+export async function deleteSeries(seriesId) {
+  await axios.delete(`${baseUrl}/series/${seriesId}`);
+}
+
+// We can't send additional information with DELETE, so we use POST instead
+export async function deleteChapter(chapterId, seriesId) {
+  await axios.post(`${baseUrl}/chapters/${chapterId}`, {
+    seriesId,
+  });
+}
+export async function deleteArticle(articleId, chapterId) {
+  await axios.post(`${baseUrl}/articles/${articleId}`, {
+    chapterId,
+  });
 }

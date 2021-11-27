@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import {
   getAllSeries,
   createSeries,
-  deleteSeries,
   updateSeries,
+  deleteSeries,
 } from "../../services/articles";
 import AdminLayout from "../../components/Layout/AdminLayout";
 import Button from "../../components/UI/Button";
@@ -19,7 +19,8 @@ export default function SeriesListPage() {
   let [showCreateModal, setShowCreateModal] = useState(false);
   let [showUpdateModal, setShowUpdateModal] = useState(false);
   let [showDeleteModal, setShowDeleteModal] = useState(false);
-  let [targetSeries, setTargetSeries] = useState(null); // The target series for editing/removing
+  // The target series for updating/deleting
+  let [targetSeries, setTargetSeries] = useState(null);
 
   useEffect(() => {
     getAllSeries().then((returnedData) => setAllSeries(returnedData));
@@ -88,13 +89,13 @@ function SeriesRow({
   const { id: seriesId, title, chapters, showChapterButtons } = series;
 
   const handleClickUpdate = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent navigation
     setShowUpdateModal(true);
     setTargetSeries(series);
   };
 
   const handleClickDelete = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent navigation
     setShowDeleteModal(true);
     setTargetSeries(series);
   };
@@ -102,7 +103,7 @@ function SeriesRow({
   return (
     <Link
       to={`/admin/chapter-list/${seriesId}`}
-      onKeyDown={(e) => e.preventDefault()} // Prevent from navigation when enter key pressed
+      onKeyDown={(e) => e.preventDefault()} // Prevent navigation when pressing enter key
     >
       <div
         className={`${styles.tableRowWithBackground} ${styles.tableGridSeriesList}`}
@@ -240,7 +241,7 @@ function DeleteModal({
   return (
     <Modal
       title="刪除系列"
-      content={`你確定要刪除「${targetSeries.title}」？`}
+      content={`確定要刪除「${targetSeries.title}」嗎？`}
       confirmHandler={handleConfirm}
       cancelHandler={() => setShowDeleteModal(false)}
     />

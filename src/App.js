@@ -10,7 +10,8 @@ import ReadingPage from "./pages/reading";
 import SeriesListPage from "./pages/admin/series-list";
 import ChapterListPage from "./pages/admin/chapter-list";
 import ArticleListPage from "./pages/admin/article-list";
-import AddArticlePage from "./pages/admin/add-article";
+import CreateArticlePage from "./pages/admin/create-article";
+import EditArticlePage from "./pages/admin/edit-article";
 
 export default function App() {
   // These states are used in the `ReadingPage` component. If we put them in the
@@ -43,11 +44,14 @@ export default function App() {
         <Route path="/admin/chapter-list/:seriesId">
           <ChapterListPage />
         </Route>
-        <Route path="/admin/article-list/:seriesId/:chapterId">
+        <Route path="/admin/article-list/:seriesId,:chapterId">
           <ArticleListPage />
         </Route>
-        <Route path="/admin/add-article">
-          <AddArticlePage />
+        <Route path="/admin/create-article">
+          <CreateArticlePage />
+        </Route>
+        <Route path="/admin/edit-article">
+          <EditArticlePage />
         </Route>
       </Switch>
     </Router>

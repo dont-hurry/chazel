@@ -1,13 +1,14 @@
+// Use the same styles as the `Input` component
 import styles from "./Input.module.css";
 
-export default function Input({ defaultValue, disabled, id, placeholder }) {
+export default function Textarea({ defaultValue, id, placeholder, rows }) {
   return (
-    <input
+    <textarea
       className={styles.base}
       defaultValue={defaultValue}
-      disabled={disabled}
       id={id}
       placeholder={placeholder}
+      rows={rows}
     />
   );
 }
