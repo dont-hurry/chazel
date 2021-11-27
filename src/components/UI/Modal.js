@@ -23,12 +23,9 @@ export default function Modal({
         <div className={styles.contentWrapper}>{content}</div>
         <div className={styles.buttonsWrapper}>
           <Button onClick={cancelHandler}>{cancelText}</Button>
-          {!confirmHandler && <Button>{confirmText}</Button>}
-          {confirmHandler && (
-            <Button active onClick={confirmHandler}>
-              {confirmText}
-            </Button>
-          )}
+          <Button active submit={!confirmHandler} onClick={confirmHandler}>
+            {confirmText}
+          </Button>
         </div>
       </div>
     </div>

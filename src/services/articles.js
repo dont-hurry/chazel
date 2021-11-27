@@ -94,3 +94,7 @@ export async function createSeries(newSeries) {
 export async function deleteSeries(seriesId) {
   await axios.delete(`${baseUrl}/series/${seriesId}`);
 }
+
+export async function updateSeries(seriesId, newSeries) {
+  await axios.put(`${baseUrl}/series/${seriesId}`, newSeries);
+}

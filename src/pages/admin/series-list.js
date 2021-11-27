@@ -3,6 +3,7 @@ import {
   getAllSeries,
   createSeries,
   deleteSeries,
+  updateSeries,
 } from "../../services/articles";
 import AdminLayout from "../../components/Layout/AdminLayout";
 import Button from "../../components/UI/Button";
@@ -59,6 +60,8 @@ export default function SeriesListPage() {
 
       {showUpdateModal && (
         <UpdateModal
+          allSeries={allSeries}
+          setAllSeries={setAllSeries}
           setShowUpdateModal={setShowUpdateModal}
           targetSeries={targetSeries}
         />
@@ -97,7 +100,10 @@ function SeriesRow({
   };
 
   return (
-    <Link to={`/admin/chapter-list/${seriesId}`}>
+    <Link
+      to={`/admin/chapter-list/${seriesId}`}
+      onKeyDown={(e) => e.preventDefault()} // Prevent from navigation when enter key pressed
+    >
       <div
         className={`${styles.tableRowWithBackground} ${styles.tableGridSeriesList}`}
       >
@@ -158,11 +164,61 @@ function CreateModal({ allSeries, setAllSeries, setShowCreateModal }) {
   );
 }
 
-function UpdateModal({ setShowUpdateModal, targetSeries }) {
+function UpdateModal({
+  allSeries,
+  setAllSeries,
+  setShowUpdateModal,
+  targetSeries,
+}) {
+  const formRef = useRef();
+
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+
+    let formElement = formRef.current;
+    const newSeries = {
+      ...targetSeries,
+      title: formElement.querySelector("input").value,
+      showChapterButtons: formElement.querySelector("select").value === "true",
+    };
+    await updateSeries(targetSeries.id, newSeries);
+
+    setAllSeries(
+      allSeries.map((s) => (s.id !== targetSeries.id ? s : newSeries))
+    );
+    setShowUpdateModal(false);
+  };
+
+  const content = (
+    <form className={styles.form} ref={formRef} onSubmit={handleConfirm}>
+      <div className={styles.formInputGroup}>
+        <label htmlFor="series-input-title">系列標題</label>
+        <Input
+          id="series-input-title"
+          placeholder="系列標題"
+          defaultValue={targetSeries.title}
+        />
+      </div>
+      <div className={styles.formInputGroup}>
+        <label htmlFor="series-select-show-chapter-buttons">
+          顯示章節切換按鈕
+        </label>
+        <Select
+          id="series-select-show-chapter-buttons"
+          defaultValue={targetSeries.showChapterButtons}
+        >
+          <option value="true">是</option>
+          <option value="false">否</option>
+        </Select>
+      </div>
+    </form>
+  );
+
   return (
     <Modal
       title="編輯系列"
-      content={JSON.stringify(targetSeries)}
+      content={content}
+      confirmHandler={handleConfirm}
       cancelHandler={() => setShowUpdateModal(false)}
     />
   );

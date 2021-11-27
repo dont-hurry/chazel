@@ -1,7 +1,12 @@
 import styles from "./Input.module.css";
 
-export default function Input({ id, placeholder }) {
+export default function Input({ defaultValue, id, placeholder }) {
   return (
-    <input className={styles.base} id={id} placeholder={placeholder} />
+    <input
+      className={styles.base}
+      defaultValue={defaultValue}
+      id={id}
+      placeholder={placeholder}
+    />
   );
 }
