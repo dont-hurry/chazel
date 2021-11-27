@@ -11,7 +11,22 @@
 }
 
 .column a {
+  /* There is a little white space after the cover image */
   font-size: 0;
+}
+
+.skeletonCoverImage {
+  aspect-ratio: 4/3;
+}
+
+.skeletonTitle {
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.skeletonPreview {
+  height: 150px;
+  margin: 10px 0;
 }
 
 .coverImage {
@@ -32,23 +47,9 @@
   margin-top: 10px;
 }
 
-.content {
+.preview {
   color: rgb(60, 60, 60);
   font-size: 16px;
   line-height: 1.6;
-  margin: 10px 0;
-}
-
-.skeletonCoverImage {
-  aspect-ratio: 4/3;
-}
-
-.skeletonTitle {
-  font-size: 24px;
-  margin-top: 10px;
-}
-
-.skeletonContent {
-  height: 150px;
   margin: 10px 0;
 }

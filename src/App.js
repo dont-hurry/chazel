@@ -1,18 +1,21 @@
 import { useState } from "react";
-import fontSizeOptions from "./data/font-size-options";
-import lineHeightOptions from "./data/line-height-options";
+import {
+  fontSizeOptions,
+  lineHeightOptions,
+} from "./constants/reading-options";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import styles from "./App.module.css";
-import Header from "./components/Header";
-import Navigation from "./components/Navigation";
 import MainPage from "./pages/main";
 import ReadingPage from "./pages/reading";
-import Footer from "./components/Footer";
+import SeriesListPage from "./pages/admin/series-list";
+import ChapterListPage from "./pages/admin/chapter-list";
+import ArticleListPage from "./pages/admin/article-list";
+import AddArticlePage from "./pages/admin/add-article";
 
 export default function App() {
-  // - These states are used in the `ReadingPage` component.
-  // - We put them here (instead the of `ReadingPage` component) because if the
-  //   `ReadingPage` component unmounts, the state will be lost.
+  // These states are used in the `ReadingPage` component. If we put them in the
+  // `ReadingPage` component, they will disappear when the `ReadingPage`
+  // component unmounts.
   const [readingFontSize, setReadingFontSize] = useState(
     fontSizeOptions.defaultValue
   );
@@ -22,24 +25,31 @@ export default function App() {
 
   return (
     <Router>
-      <div className={styles.container}>
-        <Header />
-        <Navigation />
-        <Switch>
-          <Route path="/" exact>
-            <MainPage />
-          </Route>
-          <Route path="/articles/">
-            <ReadingPage
-              fontSize={readingFontSize}
-              setFontSize={setReadingFontSize}
-              lineHeight={readingLineHeight}
-              setLineHeight={setReadingLineHeight}
-            />
-          </Route>
-        </Switch>
-      </div>
-      <Footer />
+      <Switch>
+        <Route path="/" exact>
+          <MainPage />
+        </Route>
+        <Route path="/articles/">
+          <ReadingPage
+            fontSize={readingFontSize}
+            setFontSize={setReadingFontSize}
+            lineHeight={readingLineHeight}
+            setLineHeight={setReadingLineHeight}
+          />
+        </Route>
+        <Route path="/admin/series-list">
+          <SeriesListPage />
+        </Route>
+        <Route path="/admin/chapter-list/:seriesId">
+          <ChapterListPage />
+        </Route>
+        <Route path="/admin/article-list/:seriesId/:chapterId">
+          <ArticleListPage />
+        </Route>
+        <Route path="/admin/add-article">
+          <AddArticlePage />
+        </Route>
+      </Switch>
     </Router>
   );
 }

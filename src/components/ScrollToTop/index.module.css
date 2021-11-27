@@ -1,0 +1,21 @@
+.container {
+  background: rgb(245, 245, 245);
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 5px;
+  bottom: 15px;
+  color: rgb(100, 100, 100);
+  cursor: pointer;
+  height: 40px;
+  padding: 7.5px;
+  position: fixed;
+  right: 17.5px;
+  transition: 0.1s ease-out;
+  width: 40px;
+  z-index: 1;
+}
+
+.container:hover {
+  background: rgb(200, 200, 200);
+  border-color: rgb(170, 170, 170);
+  color: rgb(45, 45, 45);
+}

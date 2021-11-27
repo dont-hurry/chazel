@@ -5,11 +5,11 @@
   width: 180px;
 }
 
-.containerFixed {
-  position: fixed;
+.container > div:not(:last-child) {
+  border-bottom: 1px dashed rgb(200, 200, 200);
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .container {
     display: none;
   }

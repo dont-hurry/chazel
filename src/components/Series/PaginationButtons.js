@@ -3,8 +3,8 @@ import Button from "../UI/Button";
 
 export default function PaginationButtons({
   currentPage,
-  totalPage,
   setCurrentPage,
+  totalPage,
 }) {
   const handleClick = (targetPage) => {
     if (targetPage !== currentPage) setCurrentPage(targetPage);
@@ -12,7 +12,7 @@ export default function PaginationButtons({
 
   return (
     <div className={styles.container}>
-      {new Array(totalPage).fill(null).map((_value, index) => (
+      {new Array(totalPage).fill(null).map((value, index) => (
         <Button
           key={index}
           active={index + 1 === currentPage}

@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  /* To make nav stacked above the article cover image */
+  /* To make the navigation component stacked above the article cover image */
   z-index: 1;
 }
 
@@ -47,7 +47,8 @@
 
 .invisible {
   opacity: 0;
-  transform: translateY(-10000px); /* Move the navigation out of the viewport */
+  /* Move the navigation component out of the viewport */
+  transform: translateY(-10000px);
 
   /* transition: property name | duration | delay */
   transition: opacity 0.5s 0s, transform 0s 0.5s;

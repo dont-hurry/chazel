@@ -1,7 +1,9 @@
 import styles from "./index.module.css";
 import OptionsButtonGroup from "./OptionsButtonGroup";
-import fontSizeOptions from "../../data/font-size-options";
-import lineHeightOptions from "../../data/line-height-options";
+import {
+  fontSizeOptions,
+  lineHeightOptions,
+} from "../../constants/reading-options";
 import SiblingArticlesButtonGroup from "./SiblingArticlesButtonGroup";
 
 export default function ReadingSidebar({

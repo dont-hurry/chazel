@@ -11,7 +11,7 @@
   grid-template-columns: 1fr 1fr;
 }
 
-.aboutText {
+.textAbout {
   color: rgb(180, 180, 180);
   font-size: 18px;
   grid-column: 1 / span 2;

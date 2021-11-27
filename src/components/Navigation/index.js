@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import NormalNavigation from "./NormalNavigation";
 import FixedNavigation from "./FixedNavigation";
 
+let scrollThrottleTimer;
+
 export default function Navigation() {
   const normalNavigationRef = useRef();
 
@@ -11,13 +13,18 @@ export default function Navigation() {
   useEffect(() => {
     const handleScroll = () => {
       const normalNavigationContainer = normalNavigationRef.current;
+      if (!normalNavigationContainer) return;
 
-      // height of `.nav` is 50px
-      if (normalNavigationContainer.getBoundingClientRect().top <= -50) {
-        setIsFixedNavigationVisible(true);
-      } else {
-        setIsFixedNavigationVisible(false);
-      }
+      clearTimeout(scrollThrottleTimer);
+
+      scrollThrottleTimer = setTimeout(() => {
+        // The height of the `NormalNavigation` component is 50px
+        if (normalNavigationContainer.getBoundingClientRect().top <= -50) {
+          setIsFixedNavigationVisible(true);
+        } else {
+          setIsFixedNavigationVisible(false);
+        }
+      }, 50);
     };
 
     window.addEventListener("scroll", handleScroll);

@@ -1,7 +1,10 @@
 .outerContainer {
-  display: flex;
-  flex-direction: column;
   padding: 0 10px;
+}
+
+.skeletonTitle {
+  font-size: 36px;
+  margin: 35px 0 15px;
 }
 
 .title {
@@ -12,19 +15,25 @@
 
 .innerContainer {
   display: flex;
-  margin-bottom: 40px;
-  padding: 20px 0 15px;
+  padding: 20px 0 55px;
 }
 
 .contentWrapper {
   border-right: 1px dashed rgb(200, 200, 200);
   color: rgb(30, 30, 30);
+  font-family: "Noto Serif TC", serif;
   padding: 20px 15px 15px 0;
   white-space: pre-wrap;
   width: 800px;
 }
 
-.skeletonTitle {
-  font-size: 36px;
-  margin: 35px 0 15px;
+@media (max-width: 1024px) {
+  .outerContainer {
+    margin: auto;
+  }
+
+  .contentWrapper {
+    border: none;
+    width: 100%;
+  }
 }

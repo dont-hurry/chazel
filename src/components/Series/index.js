@@ -5,7 +5,9 @@ import ChapterButtonGroup from "./ChapterButtonGroup";
 import PreviewColumns from "./PreviewColumns";
 import PaginationButtons from "./PaginationButtons";
 
-export default function Series({ series: { anchor, title, chapters } }) {
+export default function Series({
+  series: { title, anchor, showChapterButtons, chapters },
+}) {
   const [previews, setPreviews] = useState(null);
   const [currentChapterIndex, setCurrentChapterIndex] = useState(
     chapters.length - 1
@@ -14,31 +16,35 @@ export default function Series({ series: { anchor, title, chapters } }) {
   const totalPage = Math.ceil(chapters[currentChapterIndex].articleNum / 3);
 
   useEffect(() => {
-    // For showing react-loading-skeleton in the `PreviewColumns` component
+    // Make `react-loading-skeleton` shown (in the `PreviewColumns` component)
+    // when clicking on buttons navigation to another chapter
     setPreviews(null);
 
-    getPreviewsByChapterAndPage(
-      chapters[currentChapterIndex],
-      currentPage
-    ).then((returnedPreviews) => setPreviews(returnedPreviews));
+    getPreviewsByChapterAndPage({
+      chapter: chapters[currentChapterIndex],
+      page: currentPage,
+    }).then((returnedData) => setPreviews(returnedData));
   }, [chapters, currentChapterIndex, currentPage]);
 
   return (
     <section id={anchor} className={styles.container}>
-      <h2 className={styles.title}>{title}</h2>
+      <h3 className={styles.title}>{title}</h3>
 
-      <ChapterButtonGroup
-        chapters={chapters}
-        currentChapterIndex={currentChapterIndex}
-        setCurrentChapterIndex={setCurrentChapterIndex}
-      />
+      {showChapterButtons && (
+        <ChapterButtonGroup
+          chapters={chapters}
+          currentChapterIndex={currentChapterIndex}
+          setCurrentChapterIndex={setCurrentChapterIndex}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
 
       <PreviewColumns previews={previews} />
 
       <PaginationButtons
         currentPage={currentPage}
-        totalPage={totalPage}
         setCurrentPage={setCurrentPage}
+        totalPage={totalPage}
       />
     </section>
   );

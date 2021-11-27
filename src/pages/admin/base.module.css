@@ -1,0 +1,78 @@
+.table {
+  font-size: 18px;
+  padding-bottom: 40px;
+}
+
+.tableGridSeriesList,
+.tableGridChapterList,
+.tableGridArticleList {
+  align-items: center;
+  display: grid;
+}
+
+.tableGridSeriesList {
+  grid-template-columns: 600px 250px 150px;
+}
+
+.tableGridChapterList {
+  grid-template-columns: 850px 150px;
+}
+
+.tableGridArticleList {
+  font-size: 16px;
+  grid-template-columns: 280px 500px 120px 100px;
+}
+
+.tableGridSeriesList > div:first-child,
+.tableGridChapterList > div:first-child,
+.tableGridArticleList > div:first-child {
+  padding-left: 25px;
+}
+
+.tableHeader {
+  color: rgba(0, 0, 0, 0.4);
+  margin: 25px 0 20px;
+}
+
+.tableBody {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.tableBody a {
+  color: black;
+}
+
+.tableRow {
+  background: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 25px 0;
+}
+
+.tableRow:hover {
+  box-shadow: 0 0 0 2.5px rgb(215, 65, 120);
+}
+
+.preview {
+  line-height: 1.6;
+  padding-right: 25px;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formGrid {
+  display: grid;
+  font-size: 18px;
+  gap: 20px 30px;
+  grid-template-columns: 100px auto;
+}
+
+.formGrid > div:nth-child(2n + 1) {
+  justify-self: right;
+}

@@ -5,8 +5,12 @@ export default function ChapterButtonGroup({
   chapters,
   currentChapterIndex,
   setCurrentChapterIndex,
+  setCurrentPage,
 }) {
-  if (chapters.length === 1) return null;
+  const handleClick = (chapterId) => {
+    setCurrentChapterIndex(chapterId);
+    setCurrentPage(1);
+  };
 
   return (
     <div className={styles.container}>
@@ -14,7 +18,7 @@ export default function ChapterButtonGroup({
         <Button
           key={chapter.id}
           active={chapter.id === currentChapterIndex}
-          onClick={() => setCurrentChapterIndex(chapter.id)}
+          onClick={() => handleClick(chapter.id)}
         >
           {chapter.title}
         </Button>

@@ -1,4 +1,4 @@
-.nav {
+.container {
   align-items: center;
   border-bottom: 1px solid #000;
   border-top: 2px solid #000;
@@ -8,11 +8,11 @@
   justify-content: center;
 }
 
-.nav a {
+.container a {
   color: #000;
-  font: 16px "Noto Serif TC", serif;
+  font-size: 16px;
 }
 
-.nav a:hover {
+.container a:hover {
   color: rgb(180, 0, 40);
 }
