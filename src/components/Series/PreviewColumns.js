@@ -8,6 +8,8 @@ export default function PreviewColumns({ chapter, page }) {
   const [previews, setPreviews] = useState(null);
 
   useEffect(() => {
+    setPreviews(null);
+
     getPreviewsByChapterAndPage({ chapter, page }).then((returnedData) =>
       setPreviews(returnedData)
     );
