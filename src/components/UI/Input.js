@@ -1,6 +1,12 @@
 import styles from "./Input.module.css";
 
-export default function Input({ defaultValue, disabled, id, placeholder }) {
+export default function Input({
+  defaultValue,
+  disabled,
+  id,
+  placeholder,
+  type,
+}) {
   return (
     <input
       className={styles.base}
@@ -8,6 +14,7 @@ export default function Input({ defaultValue, disabled, id, placeholder }) {
       disabled={disabled}
       id={id}
       placeholder={placeholder}
+      type={type || "text"}
     />
   );
 }

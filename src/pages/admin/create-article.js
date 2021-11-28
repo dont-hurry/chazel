@@ -77,6 +77,7 @@ export default function AddArticlePage() {
             id="input-date"
             defaultValue={previousData && previousData.date}
             placeholder="發表日期"
+            type="date"
           />
         </div>
         <div className={styles.formInputGroup}>
