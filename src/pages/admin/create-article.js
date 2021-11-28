@@ -40,12 +40,13 @@ export default function AddArticlePage() {
 
   const handleSubmit = async () => {
     if (formRef.current) {
+      let token = localStorage.getItem("token");
       const formElement = formRef.current;
       const title = formElement.querySelector("#input-title").value;
       const date = formElement.querySelector("#input-date").value;
       const content = formElement.querySelector("#textarea-content").value;
 
-      await createArticle({ title, date, content }, chapterId);
+      await createArticle(token, { title, date, content }, chapterId);
 
       localStorage.removeItem(storageKey);
       window.history.back();

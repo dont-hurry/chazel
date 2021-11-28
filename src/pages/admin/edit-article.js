@@ -53,11 +53,12 @@ export default function EditArticlePage() {
 
   const handleSubmit = async () => {
     if (formRef.current) {
+      let token = localStorage.getItem("token");
       const formElement = formRef.current;
       const title = formElement.querySelector("#input-title").value;
       const date = formElement.querySelector("#input-date").value;
       const content = formElement.querySelector("#textarea-content").value;
-      await updateArticle(articleId, { title, date, content });
+      await updateArticle(token, articleId, { title, date, content });
       localStorage.removeItem(storageKey);
       window.history.back();
     }

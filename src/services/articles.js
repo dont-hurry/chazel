@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const baseUrl = "https://stormy-headland-37546.herokuapp.com/api";
-// const baseUrl = "http://localhost:3001/api";
+import { baseUrl } from "../constants/api";
 
 export async function getAllSeries() {
   const response = await axios.get(`${baseUrl}/series`);
@@ -73,51 +71,86 @@ export async function getArticlesByChapterId(chapterId) {
   return result;
 }
 
-export async function createSeries(newSeries) {
-  const response = await axios.post(`${baseUrl}/series`, newSeries);
-  return response.data;
-}
-
-export async function createChapter(newChapter, seriesId) {
-  const response = await axios.post(`${baseUrl}/chapters`, {
-    newChapter,
-    seriesId,
+export async function createSeries(token, newSeries) {
+  const response = await axios.post(`${baseUrl}/series`, newSeries, {
+    headers: { Authorization: `bearer ${token}` },
   });
   return response.data;
 }
 
-export async function createArticle(newArticle, chapterId) {
-  const response = await axios.post(`${baseUrl}/articles`, {
-    newArticle,
-    chapterId,
-  });
+export async function createChapter(token, newChapter, seriesId) {
+  const response = await axios.post(
+    `${baseUrl}/chapters`,
+    {
+      newChapter,
+      seriesId,
+    },
+    {
+      headers: { Authorization: `bearer ${token}` },
+    }
+  );
   return response.data;
 }
 
-export async function updateSeries(seriesId, newSeries) {
-  await axios.put(`${baseUrl}/series/${seriesId}`, newSeries);
+export async function createArticle(token, newArticle, chapterId) {
+  const response = await axios.post(
+    `${baseUrl}/articles`,
+    {
+      newArticle,
+      chapterId,
+    },
+    {
+      headers: { Authorization: `bearer ${token}` },
+    }
+  );
+  return response.data;
 }
 
-export async function updateChapter(chapterId, newChapter) {
-  await axios.put(`${baseUrl}/chapters/${chapterId}`, newChapter);
+export async function updateSeries(token, seriesId, newSeries) {
+  await axios.put(`${baseUrl}/series/${seriesId}`, newSeries, {
+    headers: { Authorization: `bearer ${token}` },
+  });
 }
 
-export async function updateArticle(articleId, newArticle) {
-  await axios.put(`${baseUrl}/articles/${articleId}`, newArticle);
+export async function updateChapter(token, chapterId, newChapter) {
+  await axios.put(`${baseUrl}/chapters/${chapterId}`, newChapter, {
+    headers: { Authorization: `bearer ${token}` },
+  });
 }
 
-export async function deleteSeries(seriesId) {
-  await axios.delete(`${baseUrl}/series/${seriesId}`);
+export async function updateArticle(token, articleId, newArticle) {
+  await axios.put(`${baseUrl}/articles/${articleId}`, newArticle, {
+    headers: { Authorization: `bearer ${token}` },
+  });
+}
+
+export async function deleteSeries(token, seriesId) {
+  await axios.delete(`${baseUrl}/series/${seriesId}`, {
+    headers: { Authorization: `bearer ${token}` },
+  });
 }
 
 // We can't send additional information with DELETE, so we use POST instead
-export async function deleteChapter(chapterId, seriesId) {
-  await axios.post(`${baseUrl}/chapters/${chapterId}`, {
-    seriesId,
-  });
+export async function deleteChapter(token, chapterId, seriesId) {
+  await axios.post(
+    `${baseUrl}/chapters/${chapterId}`,
+    {
+      seriesId,
+    },
+    {
+      headers: { Authorization: `bearer ${token}` },
+    }
+  );
 }
-export async function deleteArticle(articleId, chapterId) {
-  await axios.post(`${baseUrl}/articles/${articleId}`, {
-    chapterId,
-  });
+
+export async function deleteArticle(token, articleId, chapterId) {
+  await axios.post(
+    `${baseUrl}/articles/${articleId}`,
+    {
+      chapterId,
+    },
+    {
+      headers: { Authorization: `bearer ${token}` },
+    }
+  );
 }

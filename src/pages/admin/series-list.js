@@ -8,7 +8,7 @@ import {
 import AdminLayout from "../../components/Layout/AdminLayout";
 import Button from "../../components/UI/Button";
 import styles from "./base.module.css";
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline";
 import Modal from "../../components/UI/Modal";
 import Input from "../../components/UI/Input";
@@ -22,13 +22,23 @@ export default function SeriesListPage() {
   // The target series for updating/deleting
   let [targetSeries, setTargetSeries] = useState(null);
 
+  const history = useHistory();
+
   useEffect(() => {
     getAllSeries().then((returnedData) => setAllSeries(returnedData));
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    history.replace("/");
+  };
+
   return (
     <AdminLayout title="系列列表">
-      <Button onClick={() => setShowCreateModal(true)}>新增系列</Button>
+      <div className={styles.headerButtonsContainer}>
+        <Button onClick={() => setShowCreateModal(true)}>新增系列</Button>
+        <Button onClick={handleLogout}>登出</Button>
+      </div>
 
       <div className={styles.tableHeader}>
         <div className={`${styles.tableRow} ${styles.tableGridSeriesList}`}>
@@ -126,12 +136,13 @@ function CreateModal({ allSeries, setAllSeries, setShowCreateModal }) {
   const handleConfirm = async (e) => {
     e.preventDefault();
 
+    let token = localStorage.getItem("token");
     let formElement = formRef.current;
     const newSeries = {
       title: formElement.querySelector("input").value,
       showChapterButtons: formElement.querySelector("select").value === "true",
     };
-    const returnedSeries = await createSeries(newSeries);
+    const returnedSeries = await createSeries(token, newSeries);
 
     setAllSeries([...allSeries, returnedSeries]);
     setShowCreateModal(false);
@@ -176,13 +187,14 @@ function UpdateModal({
   const handleConfirm = async (e) => {
     e.preventDefault();
 
+    let token = localStorage.getItem("token");
     let formElement = formRef.current;
     const newSeries = {
       ...targetSeries,
       title: formElement.querySelector("input").value,
       showChapterButtons: formElement.querySelector("select").value === "true",
     };
-    await updateSeries(targetSeries.id, newSeries);
+    await updateSeries(token, targetSeries.id, newSeries);
 
     setAllSeries(
       allSeries.map((s) => (s.id !== targetSeries.id ? s : newSeries))
@@ -232,7 +244,8 @@ function DeleteModal({
   targetSeries,
 }) {
   const handleConfirm = async () => {
-    deleteSeries(targetSeries.id);
+    let token = localStorage.getItem("token");
+    deleteSeries(token, targetSeries.id);
 
     setAllSeries(allSeries.filter((s) => s.id !== targetSeries.id));
     setShowDeleteModal(false);

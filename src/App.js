@@ -3,10 +3,11 @@ import {
   fontSizeOptions,
   lineHeightOptions,
 } from "./constants/reading-options";
-
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainPage from "./pages/main";
 import ReadingPage from "./pages/reading";
+import LoginPage from "./pages/login";
+import AuthRedirectRoute from "./components/helpers/AuthRedirectRoute";
 import SeriesListPage from "./pages/admin/series-list";
 import ChapterListPage from "./pages/admin/chapter-list";
 import ArticleListPage from "./pages/admin/article-list";
@@ -38,21 +39,24 @@ export default function App() {
             setLineHeight={setReadingLineHeight}
           />
         </Route>
-        <Route path="/admin/series-list">
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <AuthRedirectRoute path="/admin/series-list">
           <SeriesListPage />
-        </Route>
-        <Route path="/admin/chapter-list/:seriesId">
+        </AuthRedirectRoute>
+        <AuthRedirectRoute path="/admin/chapter-list/:seriesId">
           <ChapterListPage />
-        </Route>
-        <Route path="/admin/article-list/:seriesId,:chapterId">
+        </AuthRedirectRoute>
+        <AuthRedirectRoute path="/admin/article-list/:seriesId,:chapterId">
           <ArticleListPage />
-        </Route>
-        <Route path="/admin/create-article">
+        </AuthRedirectRoute>
+        <AuthRedirectRoute path="/admin/create-article">
           <CreateArticlePage />
-        </Route>
-        <Route path="/admin/edit-article">
+        </AuthRedirectRoute>
+        <AuthRedirectRoute path="/admin/edit-article">
           <EditArticlePage />
-        </Route>
+        </AuthRedirectRoute>
       </Switch>
     </Router>
   );

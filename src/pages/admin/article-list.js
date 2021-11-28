@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   getSeriesById,
@@ -22,6 +22,8 @@ export default function ArticleListPage() {
   // The target article for deleting
   let [targetArticle, setTargetArticle] = useState(null);
 
+  const history = useHistory();
+
   useEffect(() => {
     async function fetchData() {
       const series = await getSeriesById(seriesId);
@@ -36,16 +38,24 @@ export default function ArticleListPage() {
     fetchData();
   }, [seriesId, chapterId]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    history.replace("/");
+  };
+
   return (
     <AdminLayout title={`文章列表：${seriesTitle}，${chapterTitle}`}>
-      <Link
-        to={{
-          pathname: "/admin/create-article",
-          state: { seriesId, chapterId, seriesTitle, chapterTitle },
-        }}
-      >
-        <Button>新增文章</Button>
-      </Link>
+      <div className={styles.headerButtonsContainer}>
+        <Link
+          to={{
+            pathname: "/admin/create-article",
+            state: { seriesId, chapterId, seriesTitle, chapterTitle },
+          }}
+        >
+          <Button>新增文章</Button>
+        </Link>
+        <Button onClick={handleLogout}>登出</Button>
+      </div>
 
       <div className={styles.tableHeader}>
         <div className={`${styles.tableRow} ${styles.tableGridArticleList}`}>
@@ -134,7 +144,8 @@ function DeleteModal({
   targetArticle,
 }) {
   const handleConfirm = async () => {
-    deleteArticle(targetArticle.articleId, chapterId);
+    let token = localStorage.getItem("token");
+    deleteArticle(token, targetArticle.articleId, chapterId);
 
     setArticles(
       articles.filter((a) => a.articleId !== targetArticle.articleId)

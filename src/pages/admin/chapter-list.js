@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import {
   getSeriesById,
@@ -25,6 +25,8 @@ export default function ChapterListPage() {
   // The target chapter for updating/deleting
   let [targetChapter, setTargetChapter] = useState(null);
 
+  const history = useHistory();
+
   useEffect(() => {
     async function fetchData() {
       const series = await getSeriesById(seriesId);
@@ -37,9 +39,17 @@ export default function ChapterListPage() {
     fetchData();
   }, [seriesId]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    history.replace("/");
+  };
+
   return (
     <AdminLayout title={`章節列表：${seriesTitle}`}>
-      <Button onClick={() => setShowCreateModal(true)}>新增章節</Button>
+      <div className={styles.headerButtonsContainer}>
+        <Button onClick={() => setShowCreateModal(true)}>新增章節</Button>
+        <Button onClick={handleLogout}>登出</Button>
+      </div>
 
       <div className={styles.tableHeader}>
         <div className={`${styles.tableRow} ${styles.tableGridChapterList}`}>
@@ -139,11 +149,12 @@ function CreateModal({ seriesId, chapters, setChapters, setShowCreateModal }) {
   const handleConfirm = async (e) => {
     e.preventDefault();
 
+    let token = localStorage.getItem("token");
     let formElement = formRef.current;
     const newChapter = {
       title: formElement.querySelector("input").value,
     };
-    const returnedChapter = await createChapter(newChapter, seriesId);
+    const returnedChapter = await createChapter(token, newChapter, seriesId);
 
     setChapters([...chapters, returnedChapter]);
     setShowCreateModal(false);
@@ -179,12 +190,13 @@ function UpdateModal({
   const handleConfirm = async (e) => {
     e.preventDefault();
 
+    let token = localStorage.getItem("token");
     let formElement = formRef.current;
     const newChapter = {
       ...targetChapter,
       title: formElement.querySelector("input").value,
     };
-    await updateChapter(targetChapter.id, newChapter);
+    await updateChapter(token, targetChapter.id, newChapter);
 
     setChapters(
       chapters.map((c) => (c.id !== targetChapter.id ? c : newChapter))
@@ -223,7 +235,8 @@ function DeleteModal({
   targetChapter,
 }) {
   const handleConfirm = async () => {
-    deleteChapter(targetChapter.id, seriesId);
+    let token = localStorage.getItem("token");
+    deleteChapter(token, targetChapter.id, seriesId);
 
     setChapters(chapters.filter((c) => c.id !== targetChapter.id));
     setShowDeleteModal(false);

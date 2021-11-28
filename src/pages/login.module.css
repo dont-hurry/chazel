@@ -1,0 +1,28 @@
+.container {
+  margin: 0 auto;
+  padding-top: 40px;
+  width: 480px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formErrorMessage {
+  color: rgb(215, 65, 120);
+  text-align: center;
+}
+
+.formInputGroup label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.formButtonGroup {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 10px;
+}
